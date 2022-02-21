@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: grafana
+  name: grafana
+  namespace: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      containers:
+      - image: grafana/grafana:7.0.0
+        name: grafana
+        ports:
+        - containerPort: 3000
+          name: http
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: http
+        resources:
+          limits:
+            cpu: 200m
+            memory: 400Mi
+          requests:
+            cpu: 100m
+            memory: 200Mi
+        volumeMounts:
+        - mountPath: /var/lib/grafana
+          name: grafana-storage
+          readOnly: false
+        - mountPath: /etc/grafana/provisioning/datasources
+          name: grafana-datasources
+          readOnly: false
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+        pod-type: general
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+      serviceAccountName: grafana
+      volumes:
+      - name: grafana-storage
+        persistentVolumeClaim:
+         claimName: efs-grafana
+      - name: grafana-datasources
+        secret:
+          secretName: grafana-datasources
+

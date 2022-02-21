@@ -1,0 +1,95 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: amplitude-history-upload-<PRODUCT>-prod
+  namespace: airlytics
+  labels:
+    app: amplitude-history-upload
+  annotations:
+    deployment.kubernetes.io/revision: '3'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: amplitude-history-upload
+  template:
+    metadata:
+      labels:
+        app: amplitude-history-upload
+    spec:
+      nodeSelector:
+        pod-type: <POD_TYPE>
+      containers:
+        - name: amplitude-history-upload
+          image: <IMAGE_STORE_SERVER>/airlytics/amplitude-history-upload:latest
+          ports:
+            - containerPort: 8081
+              name: web
+              protocol: TCP
+          env:
+            - name: AIRLYTICS_ENVIRONMENT
+              value: 'PROD'
+            - name: AIRLYTICS_PRODUCT
+              value: '<PRODUCT>'
+            - name: AIRLYTICS_DEPLOYMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: airlytics-deployments-config
+                  key: airlytics.deployment
+            - name: HISTORY_START_DAY
+              value: '2021-07-01'
+            - name: HISTORY_END_TIME
+              value: '1626602400000'
+            - name: HISTORY_EVENTS
+              value: 'app-launch,asset-viewed,location-viewed'
+            - name: HISTORY_MAX_APPVERSION
+              value: '10.34.0'
+            - name: ATHENA_REGION
+              value: 'us-east-1'
+            - name: ATHENA_OUTPUT
+              value: 'aws-athena-query-results'
+            - name: ATHENA_CATALOG
+              value: 'AwsDataCatalog'
+            - name: ATHENA_DB
+              value: '<PRODUCT>'
+            - name: ATHENA_RAWEVENTS
+              value: 'dev_rawevents'
+            - name: AMPLITUDE_API_ENABLED
+              value: 'true'
+            - name: AMPLITUDE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: third-party-api-secret
+                  key: amplitude-<PRODUCT>-key
+          livenessProbe:
+            httpGet:
+              path: /healthcheck/is-alive
+              port: web
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /healthcheck/is-ready
+              port: web
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              memory: 512Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600

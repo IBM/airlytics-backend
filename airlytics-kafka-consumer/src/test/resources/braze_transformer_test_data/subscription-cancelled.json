@@ -1,0 +1,14 @@
+{
+  "name": "subscription-cancelled",
+  "userId": "CC937DDF-6060-4D01-BB8A-F834AA6A1E6F",
+  "eventId": "81e6d5e7-04a8-37e9-8ca0-abc1ec589534",
+  "platform": "ios",
+  "eventTime": 1610444359000,
+  "schemaVersion": "1.0",
+  "attributes": {
+    "premiumProductId": "com.product.iap.renewing.1month.1",
+    "cancellationReason": "SUBSCRIPTION_UPGRADED",
+    "revenueUsdMicros": -990000
+  },
+  "productId": "7900f30b-8f47-4829-95c5-9d4d6e8564ee"
+}

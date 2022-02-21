@@ -1,0 +1,157 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.2.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'java'
+	id 'war'
+	id 'eclipse'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+ext {
+	//change to false to publish a release build
+	SNAPSHOT = true
+	springBootAdminVersion = '2.1.0'
+}
+
+group = 'com.ibm.airlytics'
+version = '1.0'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+	maven {
+		url = artifactory_url + artifactory_repo_key_airlock
+		credentials {
+			username artifactory_username
+			password artifactory_password
+		}
+	}
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+
+	implementation('org.postgresql:postgresql:42.2.8')
+	implementation 'com.rabbitmq:amqp-client:5.7.3'
+	implementation project(':retention-tracker-infrastructure')
+
+	implementation group: 'io.prometheus', name: 'simpleclient', version: '0.8.0'
+	implementation group: 'io.prometheus', name: 'simpleclient_hotspot', version: '0.8.0'
+	implementation group: 'io.prometheus', name: 'simpleclient_servlet', version: '0.8.0'
+
+	// web server for health and monitoring
+	implementation group: 'io.undertow', name: 'undertow-core', version: '2.2.0.Final'
+	implementation group: 'io.undertow', name: 'undertow-servlet', version: '2.2.0.Final'
+
+	// https://mvnrepository.com/artifact/org.apache.parquet/parquet-avro
+	implementation('org.apache.parquet:parquet-avro:1.10.1') {
+		exclude group: 'org.apache.parquet.hadoop.*'
+		exclude group: 'org.apache.parquet.schema.*'
+		exclude group: 'org.apache.parquet.format.*'
+	}
+
+	// https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-common
+	implementation('org.apache.hadoop:hadoop-common:3.1.0') {
+		exclude group: 'org.apache.parquet.hadoop.*'
+		exclude group: 'org.apache.parquet.schema.*'
+		exclude group: 'org.apache.parquet.format.*'
+	}
+
+	// https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-mapred
+	implementation('org.apache.hadoop:hadoop-mapred:0.22.0') {
+		exclude group: 'org.apache.parquet.hadoop.*'
+		exclude group: 'org.apache.parquet.schema.*'
+		exclude group: 'org.apache.parquet.format.*'
+	}
+
+	// https://mvnrepository.com/artifact/org.apache.parquet/parquet-common
+	implementation('org.apache.parquet:parquet-common:1.10.1') {
+		exclude group: 'org.apache.parquet.hadoop.*'
+		exclude group: 'org.apache.parquet.schema.*'
+		exclude group: 'org.apache.parquet.format.*'
+	}
+
+	// https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-aws
+	//compile group: 'org.apache.hadoop', name: 'hadoop-aws', version: '3.1.0'
+	implementation ('org.apache.hadoop:hadoop-aws:3.1.1') {
+		exclude group: 'org.apache.parquet.hadoop.*'
+		exclude group: 'org.apache.parquet.schema.*'
+		exclude group: 'org.apache.parquet.format.*'
+	}
+
+	// https://mvnrepository.com/artifact/software.amazon.awssdk/regions
+	compile group: 'software.amazon.awssdk', name: 'regions', version: '2.15.73'
+
+	// https://mvnrepository.com/artifact/software.amazon.awssdk/athena
+	compile group: 'software.amazon.awssdk', name: 'athena', version: '2.15.73'
+
+	// https://mvnrepository.com/artifact/software.amazon.awssdk/rds
+	compile group: 'software.amazon.awssdk', name: 'rds', version: '2.15.73'
+
+
+
+	implementation 'com.google.firebase:firebase-admin:6.11.0'
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	implementation  group: 'com.airlock', name: 'airlock-java-sources', version: '1.1.0'
+	implementation files('libs/parquet-column-1.12.0-SNAPSHOT.jar')
+	implementation files('libs/parquet-format-structures-1.12.0-SNAPSHOT.jar')
+	implementation files('libs/parquet-hadoop-1.12.0-SNAPSHOT.jar')
+
+	implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.2.2'
+
+	// https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients
+	compile group: 'org.apache.kafka', name: 'kafka-clients', version: '2.3.1'
+
+	// https://mvnrepository.com/artifact/org.apache.kafka/kafka
+	compile group: 'org.apache.kafka', name: 'kafka_2.12', version: '2.3.1'
+
+	// https://mvnrepository.com/artifact/org.apache.kafka/connect-json
+	compile group: 'org.apache.kafka', name: 'connect-json', version: '2.3.1'
+
+	// https://mvnrepository.com/artifact/c3p0/c3p0
+	compile group: 'c3p0', name: 'c3p0', version: '0.9.1.2'
+
+	// https://mvnrepository.com/artifact/com.sangupta/murmur
+	implementation group: 'com.sangupta', name: 'murmur', version: '1.0.0'
+}
+
+configurations.all {
+	exclude module: 'slf4j-log4j12'
+}
+dependencyManagement {
+	imports {
+		mavenBom "de.codecentric:spring-boot-admin-dependencies:${springBootAdminVersion}"
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
+
+configurations.all {
+	resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+		if (details.requested.group == 'com.fasterxml.jackson.core' && details.requested.name == 'jackson-databind' && details.requested.version == '2.9.8') {
+			details.useVersion '2.9.10.8'
+			details.because 'fixes critical vulnerability issue in 2.9.8'
+		}
+	}
+}
+
+bootJar {
+	archiveFileName = "retention-tracker-query-handler.jar"
+	from {
+		configurations.runtimeClasspath.filter( {! (it.name =~ /parquet-column-1\.10.*\.jar/ )  && ! (it.name =~ /parquet-format-2\.4.*\.jar/ ) && ! (it.name =~ /parquet-hadoop-1\.10.*\.jar/ )}).collect {it.isDirectory() ? it : zipTree(it)}
+		mainClassName = 'com.ibm.airlytics.retentiontrackerqueryhandler.RetentionTrackerQueryHandlerApplication'
+	}
+}

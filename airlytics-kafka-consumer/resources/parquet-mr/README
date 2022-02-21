@@ -1,0 +1,14 @@
+
+
+To compile parquet-mr you should fork apache/parquet-mr repository.
+Commit point: 819443bc195b58735c7a2489795a219ca662c65e
+              Commits on May 26, 2021
+
+
+Then replace the files in the resources/parquet-mr folder with the
+forked files.
+Update the pom files in the resources/parquet-mr folder: change the systemPath tag value with the local location
+of the required artifact.
+
+
+

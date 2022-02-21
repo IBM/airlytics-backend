@@ -1,0 +1,1522 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  data:
+     event-proxy.json: |-
+         {
+           "annotations": {
+             "list": [
+               {
+                 "builtIn": 1,
+                 "datasource": "-- Grafana --",
+                 "enable": true,
+                 "hide": true,
+                 "iconColor": "rgba(0, 211, 255, 1)",
+                 "name": "Annotations & Alerts",
+                 "type": "dashboard"
+               }
+             ]
+           },
+           "editable": true,
+           "gnetId": null,
+           "graphTooltip": 0,
+           "id": 14,
+           "iteration": 1590055816741,
+           "links": [],
+           "panels": [
+             {
+               "datasource": "airlytics",
+               "gridPos": {
+                 "h": 7,
+                 "w": 12,
+                 "x": 0,
+                 "y": 0
+               },
+               "id": 20,
+               "options": {
+                 "displayMode": "lcd",
+                 "fieldOptions": {
+                   "calcs": [
+                     "last"
+                   ],
+                   "defaults": {
+                     "mappings": [],
+                     "max": 100,
+                     "min": 0,
+                     "thresholds": [
+                       {
+                         "color": "green",
+                         "value": null
+                       },
+                       {
+                         "color": "#EAB839",
+                         "value": 60
+                       },
+                       {
+                         "color": "red",
+                         "value": 80
+                       }
+                     ],
+                     "title": "",
+                     "unit": "percent"
+                   },
+                   "override": {},
+                   "values": false
+                 },
+                 "orientation": "horizontal"
+               },
+               "pluginVersion": "6.4.3",
+               "targets": [
+                 {
+                   "expr": "100 - (avg(irate(node_cpu_seconds_total{instance=~\"$node\",mode=\"idle\"}[30m])) * 100)",
+                   "hide": false,
+                   "instant": true,
+                   "legendFormat": "CPU Busy",
+                   "refId": "A"
+                 },
+                 {
+                   "expr": "avg(irate(node_cpu_seconds_total{instance=~\"$node\",mode=\"iowait\"}[30m])) * 100",
+                   "hide": true,
+                   "instant": true,
+                   "legendFormat": "Busy Iowait",
+                   "refId": "C"
+                 },
+                 {
+                   "expr": "(1 - (node_memory_MemAvailable_bytes{instance=~\"$node\"} / (node_memory_MemTotal_bytes{instance=~\"$node\"})))* 100",
+                   "hide": false,
+                   "instant": true,
+                   "legendFormat": "Used RAM Memory",
+                   "refId": "B"
+                 },
+                 {
+                   "expr": "100 - ((node_filesystem_avail_bytes{instance=~\"$node\",mountpoint=\"$maxmount\",fstype=~\"ext4|xfs\"} * 100) / node_filesystem_size_bytes {instance=~\"$node\",mountpoint=\"$maxmount\",fstype=~\"ext4|xfs\"})",
+                   "hide": false,
+                   "instant": true,
+                   "legendFormat": "Used Max Mount($maxmount)",
+                   "refId": "D"
+                 },
+                 {
+                   "expr": "(1 - (node_memory_SwapFree_bytes{instance=~\"$node\"} / node_memory_SwapTotal_bytes{instance=~\"$node\"})) * 100",
+                   "hide": true,
+                   "instant": true,
+                   "legendFormat": "Used SWAP",
+                   "refId": "E"
+                 },
+                 {
+                   "expr": "",
+                   "refId": "F"
+                 }
+               ],
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "",
+               "type": "bargauge"
+             },
+             {
+               "cacheTimeout": null,
+               "colorBackground": false,
+               "colorValue": false,
+               "colors": [
+                 "#299c46",
+                 "rgba(237, 129, 40, 0.89)",
+                 "#d44a3a"
+               ],
+               "datasource": "airlytics",
+               "format": "none",
+               "gauge": {
+                 "maxValue": 100,
+                 "minValue": 0,
+                 "show": false,
+                 "thresholdLabels": false,
+                 "thresholdMarkers": true
+               },
+               "gridPos": {
+                 "h": 7,
+                 "w": 12,
+                 "x": 12,
+                 "y": 0
+               },
+               "id": 16,
+               "interval": "",
+               "links": [],
+               "mappingType": 1,
+               "mappingTypes": [
+                 {
+                   "name": "value to text",
+                   "value": 1
+                 },
+                 {
+                   "name": "range to text",
+                   "value": 2
+                 }
+               ],
+               "maxDataPoints": 100,
+               "nullPointMode": "connected",
+               "nullText": null,
+               "options": {},
+               "pluginVersion": "6.4.3",
+               "postfix": "",
+               "postfixFontSize": "50%",
+               "prefix": "",
+               "prefixFontSize": "50%",
+               "rangeMaps": [
+                 {
+                   "from": "null",
+                   "text": "N/A",
+                   "to": "null"
+                 }
+               ],
+               "sparkline": {
+                 "fillColor": "rgba(31, 118, 189, 0.18)",
+                 "full": false,
+                 "lineColor": "rgb(31, 120, 193)",
+                 "show": false,
+                 "ymax": null,
+                 "ymin": null
+               },
+               "tableColumn": "",
+               "targets": [
+                 {
+                   "expr": "sum(increase(event_proxy_event_failures_counter{platform=~\"$platform\",env=~\"$mode\"}[$__range]))",
+                   "legendFormat": "failed events",
+                   "refId": "A"
+                 }
+               ],
+               "thresholds": "",
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Current Errors (per range)",
+               "type": "singlestat",
+               "valueFontSize": "80%",
+               "valueMaps": [
+                 {
+                   "op": "=",
+                   "text": "N/A",
+                   "value": "null"
+                 }
+               ],
+               "valueName": "current"
+             },
+             {
+               "aliasColors": {},
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "airlytics",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": {
+                 "h": 6,
+                 "w": 24,
+                 "x": 0,
+                 "y": 7
+               },
+               "id": 2,
+               "legend": {
+                 "avg": false,
+                 "current": false,
+                 "max": false,
+                 "min": false,
+                 "show": true,
+                 "total": false,
+                 "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "nullPointMode": "null",
+               "options": {
+                 "dataLinks": []
+               },
+               "percentage": false,
+               "pointradius": 2,
+               "points": false,
+               "renderer": "flot",
+               "seriesOverrides": [],
+               "spaceLength": 10,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                 {
+                   "expr": "sum(rate(event_proxy_event_counter{platform=~\"$platform\",env=~\"$mode\"}[1m]))",
+                   "legendFormat": "events",
+                   "refId": "A"
+                 },
+                 {
+                   "expr": "sum(rate(event_proxy_request_counter{platform=~\"$platform\",env=~\"$mode\"}[1m]))",
+                   "legendFormat": "requests",
+                   "refId": "B"
+                 }
+               ],
+               "thresholds": [],
+               "timeFrom": null,
+               "timeRegions": [],
+               "timeShift": null,
+               "title": "Events and Requests Counter (per sec)",
+               "tooltip": {
+                 "shared": true,
+                 "sort": 0,
+                 "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                 "buckets": null,
+                 "mode": "time",
+                 "name": null,
+                 "show": true,
+                 "values": []
+               },
+               "yaxes": [
+                 {
+                   "format": "short",
+                   "label": null,
+                   "logBase": 1,
+                   "max": null,
+                   "min": null,
+                   "show": true
+                 },
+                 {
+                   "format": "short",
+                   "label": null,
+                   "logBase": 1,
+                   "max": null,
+                   "min": null,
+                   "show": true
+                 }
+               ],
+               "yaxis": {
+                 "align": false,
+                 "alignLevel": null
+               }
+             },
+             {
+               "aliasColors": {},
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "airlytics",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": {
+                 "h": 7,
+                 "w": 24,
+                 "x": 0,
+                 "y": 13
+               },
+               "id": 12,
+               "legend": {
+                 "avg": false,
+                 "current": false,
+                 "max": false,
+                 "min": false,
+                 "show": true,
+                 "total": false,
+                 "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "nullPointMode": "null",
+               "options": {
+                 "dataLinks": []
+               },
+               "percentage": false,
+               "pointradius": 2,
+               "points": false,
+               "renderer": "flot",
+               "seriesOverrides": [],
+               "spaceLength": 10,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                 {
+                   "expr": "sum(rate(event_proxy_event_counter{platform=~\"$platform\",env=~\"$mode\"}[1m])) by (instance)",
+                   "legendFormat": "{{instance}}",
+                   "refId": "A"
+                 }
+               ],
+               "thresholds": [],
+               "timeFrom": null,
+               "timeRegions": [],
+               "timeShift": null,
+               "title": "Events Counter Per Node (per sec)",
+               "tooltip": {
+                 "shared": true,
+                 "sort": 0,
+                 "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                 "buckets": null,
+                 "mode": "time",
+                 "name": null,
+                 "show": true,
+                 "values": []
+               },
+               "yaxes": [
+                 {
+                   "format": "short",
+                   "label": null,
+                   "logBase": 1,
+                   "max": null,
+                   "min": null,
+                   "show": true
+                 },
+                 {
+                   "format": "short",
+                   "label": null,
+                   "logBase": 1,
+                   "max": null,
+                   "min": null,
+                   "show": true
+                 }
+               ],
+               "yaxis": {
+                 "align": false,
+                 "alignLevel": null
+               }
+             },
+             {
+               "aliasColors": {},
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "airlytics",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": {
+                 "h": 6,
+                 "w": 24,
+                 "x": 0,
+                 "y": 20
+               },
+               "id": 24,
+               "legend": {
+                 "avg": false,
+                 "current": false,
+                 "max": false,
+                 "min": false,
+                 "show": true,
+                 "total": false,
+                 "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "nullPointMode": "null",
+               "options": {
+                 "dataLinks": []
+               },
+               "percentage": false,
+               "pluginVersion": "6.4.3",
+               "pointradius": 2,
+               "points": false,
+               "renderer": "flot",
+               "seriesOverrides": [],
+               "spaceLength": 10,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                 {
+                   "expr": "sum(rate(event_proxy_event_failures_counter{platform=~\"$platform\",env=~\"$mode\"}[1m]))*100/sum(rate(event_proxy_event_counter{platform=~\"$platform\",env=~\"$mode\"}[1m]))",
+                   "legendFormat": "errors / total events",
+                   "refId": "A"
+                 }
+               ],
+               "thresholds": [],
+               "timeFrom": null,
+               "timeRegions": [],
+               "timeShift": null,
+               "title": " Percentage of Errors from Total Events (per sec)",
+               "tooltip": {
+                 "shared": true,
+                 "sort": 0,
+                 "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                 "buckets": null,
+                 "mode": "time",
+                 "name": null,
+                 "show": true,
+                 "values": []
+               },
+               "yaxes": [
+                 {
+                   "decimals": null,
+                   "format": "percent",
+                   "label": null,
+                   "logBase": 1,
+                   "max": null,
+                   "min": null,
+                   "show": true
+                 },
+                 {
+                   "decimals": null,
+                   "format": "short",
+                   "label": null,
+                   "logBase": 1,
+                   "max": null,
+                   "min": null,
+                   "show": true
+                 }
+               ],
+               "yaxis": {
+                 "align": false,
+                 "alignLevel": null
+               }
+             },
+             {
+               "aliasColors": {},
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "airlytics",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": {
+                 "h": 6,
+                 "w": 24,
+                 "x": 0,
+                 "y": 26
+               },
+               "id": 14,
+               "legend": {
+                 "avg": false,
+                 "current": false,
+                 "max": false,
+                 "min": false,
+                 "show": true,
+                 "total": false,
+                 "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "nullPointMode": "null",
+               "options": {
+                 "dataLinks": []
+               },
+               "percentage": false,
+               "pointradius": 2,
+               "points": false,
+               "renderer": "flot",
+               "seriesOverrides": [],
+               "spaceLength": 10,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                 {
+                   "expr": "sum(rate(event_proxy_event_failures_counter{platform=~\"$platform\",env=~\"$mode\"}[1m])) by (errorType)",
+                   "legendFormat": "{{errorType}}",
+                   "refId": "A"
+                 },
+                 {
+                   "expr": "",
+                   "refId": "B"
+                 }
+               ],
+               "thresholds": [],
+               "timeFrom": null,
+               "timeRegions": [],
+               "timeShift": null,
+               "title": "Errors Counter (per sec)",
+               "tooltip": {
+                 "shared": true,
+                 "sort": 0,
+                 "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                 "buckets": null,
+                 "mode": "time",
+                 "name": null,
+                 "show": true,
+                 "values": []
+               },
+               "yaxes": [
+                 {
+                   "format": "short",
+                   "label": null,
+                   "logBase": 1,
+                   "max": null,
+                   "min": null,
+                   "show": true
+                 },
+                 {
+                   "format": "short",
+                   "label": null,
+                   "logBase": 1,
+                   "max": null,
+                   "min": null,
+                   "show": true
+                 }
+               ],
+               "yaxis": {
+                 "align": false,
+                 "alignLevel": null
+               }
+             },
+             {
+               "aliasColors": {},
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "airlytics",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": {
+                 "h": 7,
+                 "w": 24,
+                 "x": 0,
+                 "y": 32
+               },
+               "id": 25,
+               "legend": {
+                 "avg": false,
+                 "current": false,
+                 "max": false,
+                 "min": false,
+                 "show": true,
+                 "total": false,
+                 "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "nullPointMode": "null",
+               "options": {
+                 "dataLinks": []
+               },
+               "percentage": false,
+               "pointradius": 2,
+               "points": false,
+               "renderer": "flot",
+               "seriesOverrides": [],
+               "spaceLength": 10,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                 {
+                   "expr": "sum(rate(airlytics_userdb_records_processed_total{result=\"success\",env=~'$mode', platform=~'$platform'}[1m])) by (event_name) ",
+                   "instant": false,
+                   "legendFormat": "{{event_name}}",
+                   "refId": "A"
+                 },
+                 {
+                   "expr": "",
+                   "refId": "B"
+                 }
+               ],
+               "thresholds": [],
+               "timeFrom": null,
+               "timeRegions": [],
+               "timeShift": null,
+               "title": "UserDB Records Successfully Processed (per range)",
+               "tooltip": {
+                 "shared": true,
+                 "sort": 0,
+                 "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                 "buckets": null,
+                 "mode": "time",
+                 "name": null,
+                 "show": true,
+                 "values": []
+               },
+               "yaxes": [
+                 {
+                   "format": "short",
+                   "label": null,
+                   "logBase": 1,
+                   "max": null,
+                   "min": null,
+                   "show": true
+                 },
+                 {
+                   "format": "short",
+                   "label": null,
+                   "logBase": 1,
+                   "max": null,
+                   "min": null,
+                   "show": true
+                 }
+               ],
+               "yaxis": {
+                 "align": false,
+                 "alignLevel": null
+               }
+             },
+             {
+               "aliasColors": {},
+               "bars": true,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "airlytics",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": {
+                 "h": 7,
+                 "w": 24,
+                 "x": 0,
+                 "y": 39
+               },
+               "id": 18,
+               "legend": {
+                 "avg": false,
+                 "current": false,
+                 "max": false,
+                 "min": false,
+                 "show": false,
+                 "total": false,
+                 "values": false
+               },
+               "lines": false,
+               "linewidth": 1,
+               "nullPointMode": "null",
+               "options": {
+                 "dataLinks": []
+               },
+               "percentage": false,
+               "pointradius": 2,
+               "points": false,
+               "renderer": "flot",
+               "seriesOverrides": [],
+               "spaceLength": 10,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                 {
+                   "expr": "sort(sum(increase(airlytics_userdb_records_processed_total{result=\"success\",env=~'$mode', platform=~'$platform'}[$__range])) by (event_name))",
+                   "instant": true,
+                   "legendFormat": "<div style='max-width:100px'>{{event_name}}</div>",
+                   "refId": "A"
+                 }
+               ],
+               "thresholds": [],
+               "timeFrom": null,
+               "timeRegions": [],
+               "timeShift": null,
+               "title": "UserDB Records Successfully Processed (per range)",
+               "tooltip": {
+                 "shared": false,
+                 "sort": 0,
+                 "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                 "buckets": null,
+                 "mode": "series",
+                 "name": null,
+                 "show": true,
+                 "values": [
+                   "current"
+                 ]
+               },
+               "yaxes": [
+                 {
+                   "format": "short",
+                   "label": null,
+                   "logBase": 1,
+                   "max": null,
+                   "min": null,
+                   "show": true
+                 },
+                 {
+                   "format": "short",
+                   "label": null,
+                   "logBase": 1,
+                   "max": null,
+                   "min": null,
+                   "show": true
+                 }
+               ],
+               "yaxis": {
+                 "align": false,
+                 "alignLevel": null
+               }
+             },
+             {
+               "aliasColors": {},
+               "bars": true,
+               "cacheTimeout": null,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "airlytics",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": {
+                 "h": 6,
+                 "w": 24,
+                 "x": 0,
+                 "y": 46
+               },
+               "id": 6,
+               "legend": {
+                 "avg": false,
+                 "current": false,
+                 "max": false,
+                 "min": false,
+                 "show": false,
+                 "total": false,
+                 "values": false
+               },
+               "lines": false,
+               "linewidth": 1,
+               "links": [],
+               "nullPointMode": "null",
+               "options": {
+                 "dataLinks": []
+               },
+               "percentage": false,
+               "pluginVersion": "6.4.3",
+               "pointradius": 2,
+               "points": false,
+               "renderer": "flot",
+               "seriesOverrides": [],
+               "spaceLength": 10,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                 {
+                   "expr": "sort(sum(increase(event_proxy_event_counter{platform=~\"$platform\",env=~\"$mode\"}[$__range])) by (event_name))",
+                   "hide": false,
+                   "instant": true,
+                   "legendFormat": "<div style='max-width:100px'>{{event_name}}</div>",
+                   "refId": "A"
+                 }
+               ],
+               "thresholds": [],
+               "timeFrom": null,
+               "timeRegions": [],
+               "timeShift": null,
+               "title": "Event Types (per range)",
+               "tooltip": {
+                 "shared": false,
+                 "sort": 0,
+                 "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                 "buckets": null,
+                 "mode": "series",
+                 "name": null,
+                 "show": true,
+                 "values": [
+                   "current"
+                 ]
+               },
+               "yaxes": [
+                 {
+                   "format": "short",
+                   "label": null,
+                   "logBase": 1,
+                   "max": null,
+                   "min": null,
+                   "show": true
+                 },
+                 {
+                   "format": "short",
+                   "label": null,
+                   "logBase": 1,
+                   "max": null,
+                   "min": null,
+                   "show": true
+                 }
+               ],
+               "yaxis": {
+                 "align": false,
+                 "alignLevel": null
+               }
+             },
+             {
+               "aliasColors": {},
+               "bars": true,
+               "cacheTimeout": null,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "airlytics",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": {
+                 "h": 6,
+                 "w": 24,
+                 "x": 0,
+                 "y": 52
+               },
+               "id": 26,
+               "legend": {
+                 "avg": false,
+                 "current": false,
+                 "max": false,
+                 "min": false,
+                 "show": false,
+                 "total": false,
+                 "values": false
+               },
+               "lines": false,
+               "linewidth": 1,
+               "links": [],
+               "nullPointMode": "null",
+               "options": {
+                 "dataLinks": []
+               },
+               "percentage": false,
+               "pluginVersion": "6.4.3",
+               "pointradius": 2,
+               "points": false,
+               "renderer": "flot",
+               "seriesOverrides": [],
+               "spaceLength": 10,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                 {
+                   "expr": "sort(sum(increase(event_proxy_event_failures_counter{platform=~\"$platform\",env=~\"$mode\"}[$__range])) by (errorType))",
+                   "hide": false,
+                   "instant": true,
+                   "legendFormat": "{{errorType}}",
+                   "refId": "A"
+                 }
+               ],
+               "thresholds": [],
+               "timeFrom": null,
+               "timeRegions": [],
+               "timeShift": null,
+               "title": "Error Types (per range, per type)",
+               "tooltip": {
+                 "shared": false,
+                 "sort": 0,
+                 "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                 "buckets": null,
+                 "mode": "series",
+                 "name": null,
+                 "show": true,
+                 "values": [
+                   "current"
+                 ]
+               },
+               "yaxes": [
+                 {
+                   "format": "short",
+                   "label": null,
+                   "logBase": 1,
+                   "max": null,
+                   "min": null,
+                   "show": true
+                 },
+                 {
+                   "format": "short",
+                   "label": null,
+                   "logBase": 1,
+                   "max": null,
+                   "min": null,
+                   "show": true
+                 }
+               ],
+               "yaxis": {
+                 "align": false,
+                 "alignLevel": null
+               }
+             },
+             {
+               "aliasColors": {},
+               "bars": true,
+               "cacheTimeout": null,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "airlytics",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": {
+                 "h": 6,
+                 "w": 24,
+                 "x": 0,
+                 "y": 58
+               },
+               "id": 27,
+               "legend": {
+                 "avg": false,
+                 "current": false,
+                 "max": false,
+                 "min": false,
+                 "show": false,
+                 "total": false,
+                 "values": false
+               },
+               "lines": false,
+               "linewidth": 1,
+               "links": [],
+               "nullPointMode": "null",
+               "options": {
+                 "dataLinks": []
+               },
+               "percentage": false,
+               "pluginVersion": "6.4.3",
+               "pointradius": 2,
+               "points": false,
+               "renderer": "flot",
+               "seriesOverrides": [],
+               "spaceLength": 10,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                 {
+                   "expr": "sum(increase(event_proxy_event_failures_counter{platform=~\"$platform\",env=~\"$mode\"}[$__range])) by (event_name,version)",
+                   "hide": true,
+                   "legendFormat": "{{event_name}} <br/>{{version}}",
+                   "refId": "A"
+                 },
+                 {
+                   "expr": "sort(sum(increase(event_proxy_event_failures_counter{platform=~\"$platform\",env=~\"$mode\"}[$__range])) by (event_name))",
+                   "instant": true,
+                   "legendFormat": "{{event_name}}",
+                   "refId": "B"
+                 }
+               ],
+               "thresholds": [],
+               "timeFrom": null,
+               "timeRegions": [],
+               "timeShift": null,
+               "title": "Error Types (per range, per event name)",
+               "tooltip": {
+                 "shared": false,
+                 "sort": 0,
+                 "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                 "buckets": null,
+                 "mode": "series",
+                 "name": null,
+                 "show": true,
+                 "values": [
+                   "current"
+                 ]
+               },
+               "yaxes": [
+                 {
+                   "format": "short",
+                   "label": null,
+                   "logBase": 1,
+                   "max": null,
+                   "min": null,
+                   "show": true
+                 },
+                 {
+                   "format": "short",
+                   "label": null,
+                   "logBase": 1,
+                   "max": null,
+                   "min": null,
+                   "show": true
+                 }
+               ],
+               "yaxis": {
+                 "align": false,
+                 "alignLevel": null
+               }
+             },
+             {
+               "aliasColors": {
+                 "192.168.10.227:9100_em1_in下载": "super-light-green",
+                 "192.168.10.227:9100_em1_out上传": "dark-blue"
+               },
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "airlytics",
+               "fill": 1,
+               "fillGradient": 3,
+               "gridPos": {
+                 "h": 7,
+                 "w": 8,
+                 "x": 0,
+                 "y": 64
+               },
+               "height": "300",
+               "id": 22,
+               "legend": {
+                 "alignAsTable": true,
+                 "avg": false,
+                 "current": true,
+                 "hideEmpty": true,
+                 "hideZero": true,
+                 "max": true,
+                 "min": false,
+                 "rightSide": false,
+                 "show": true,
+                 "sort": "current",
+                 "sortDesc": true,
+                 "total": false,
+                 "values": true
+               },
+               "lines": true,
+               "linewidth": 2,
+               "links": [],
+               "nullPointMode": "null",
+               "options": {
+                 "dataLinks": []
+               },
+               "percentage": false,
+               "pointradius": 2,
+               "points": false,
+               "renderer": "flot",
+               "seriesOverrides": [
+                 {
+                   "alias": "/.*_transmit$/",
+                   "transform": "negative-Y"
+                 }
+               ],
+               "spaceLength": 10,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                 {
+                   "expr": "irate(node_network_receive_bytes_total{instance=~'$node',device!~'tap.*|veth.*|br.*|docker.*|virbr*|lo*'}[30m])*8",
+                   "format": "time_series",
+                   "intervalFactor": 1,
+                   "legendFormat": "{{instance}}_{{device}}_receive",
+                   "refId": "A",
+                   "step": 4
+                 },
+                 {
+                   "expr": "irate(node_network_transmit_bytes_total{instance=~'$node',device!~'tap.*|veth.*|br.*|docker.*|virbr*|lo*'}[30m])*8",
+                   "format": "time_series",
+                   "intervalFactor": 1,
+                   "legendFormat": "{{instance}}_{{device}}_transmit",
+                   "refId": "B",
+                   "step": 4
+                 }
+               ],
+               "thresholds": [],
+               "timeFrom": null,
+               "timeRegions": [],
+               "timeShift": null,
+               "title": "Network Traffic Basic",
+               "tooltip": {
+                 "shared": true,
+                 "sort": 2,
+                 "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                 "buckets": null,
+                 "mode": "time",
+                 "name": null,
+                 "show": true,
+                 "values": []
+               },
+               "yaxes": [
+                 {
+                   "format": "bps",
+                   "label": "transmit（-）/receive（+）",
+                   "logBase": 1,
+                   "max": null,
+                   "min": null,
+                   "show": true
+                 },
+                 {
+                   "format": "short",
+                   "label": null,
+                   "logBase": 1,
+                   "max": null,
+                   "min": null,
+                   "show": false
+                 }
+               ],
+               "yaxis": {
+                 "align": false,
+                 "alignLevel": null
+               }
+             },
+             {
+               "cacheTimeout": null,
+               "colorBackground": false,
+               "colorValue": false,
+               "colors": [
+                 "#299c46",
+                 "rgba(237, 129, 40, 0.89)",
+                 "#d44a3a"
+               ],
+               "datasource": "airlytics",
+               "format": "none",
+               "gauge": {
+                 "maxValue": 100,
+                 "minValue": 0,
+                 "show": false,
+                 "thresholdLabels": false,
+                 "thresholdMarkers": true
+               },
+               "gridPos": {
+                 "h": 7,
+                 "w": 2,
+                 "x": 8,
+                 "y": 64
+               },
+               "id": 11,
+               "interval": null,
+               "links": [],
+               "mappingType": 1,
+               "mappingTypes": [
+                 {
+                   "name": "value to text",
+                   "value": 1
+                 },
+                 {
+                   "name": "range to text",
+                   "value": 2
+                 }
+               ],
+               "maxDataPoints": 100,
+               "nullPointMode": "connected",
+               "nullText": null,
+               "options": {},
+               "postfix": "",
+               "postfixFontSize": "50%",
+               "prefix": "",
+               "prefixFontSize": "50%",
+               "rangeMaps": [
+                 {
+                   "from": "null",
+                   "text": "N/A",
+                   "to": "null"
+                 }
+               ],
+               "sparkline": {
+                 "fillColor": "rgba(31, 118, 189, 0.18)",
+                 "full": false,
+                 "lineColor": "rgb(31, 120, 193)",
+                 "show": false,
+                 "ymax": null,
+                 "ymin": null
+               },
+               "tableColumn": "",
+               "targets": [
+                 {
+                   "expr": "sum(increase(event_proxy_kafka_error_counter[$__range]))",
+                   "refId": "B"
+                 }
+               ],
+               "thresholds": "",
+               "timeFrom": null,
+               "timeShift": null,
+               "title": "Kafka Errors",
+               "type": "singlestat",
+               "valueFontSize": "80%",
+               "valueMaps": [
+                 {
+                   "op": "=",
+                   "text": "N/A",
+                   "value": "null"
+                 }
+               ],
+               "valueName": "avg"
+             },
+             {
+               "aliasColors": {},
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "airlytics",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": {
+                 "h": 7,
+                 "w": 7,
+                 "x": 10,
+                 "y": 64
+               },
+               "id": 8,
+               "legend": {
+                 "avg": false,
+                 "current": false,
+                 "max": false,
+                 "min": false,
+                 "show": true,
+                 "total": false,
+                 "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "nullPointMode": "null",
+               "options": {
+                 "dataLinks": []
+               },
+               "percentage": false,
+               "pointradius": 2,
+               "points": false,
+               "renderer": "flot",
+               "seriesOverrides": [],
+               "spaceLength": 10,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                 {
+                   "expr": "sum(increase(event_proxy_kafka_error_counter{platform=~\"$platform\",env=~\"$mode\"}[1m]))",
+                   "refId": "B"
+                 }
+               ],
+               "thresholds": [],
+               "timeFrom": null,
+               "timeRegions": [],
+               "timeShift": null,
+               "title": "Kafka Errors",
+               "tooltip": {
+                 "shared": true,
+                 "sort": 0,
+                 "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                 "buckets": null,
+                 "mode": "time",
+                 "name": null,
+                 "show": true,
+                 "values": []
+               },
+               "yaxes": [
+                 {
+                   "format": "short",
+                   "label": null,
+                   "logBase": 1,
+                   "max": null,
+                   "min": null,
+                   "show": true
+                 },
+                 {
+                   "format": "short",
+                   "label": null,
+                   "logBase": 1,
+                   "max": null,
+                   "min": null,
+                   "show": true
+                 }
+               ],
+               "yaxis": {
+                 "align": false,
+                 "alignLevel": null
+               }
+             },
+             {
+               "aliasColors": {},
+               "bars": false,
+               "dashLength": 10,
+               "dashes": false,
+               "datasource": "airlytics",
+               "fill": 1,
+               "fillGradient": 0,
+               "gridPos": {
+                 "h": 7,
+                 "w": 7,
+                 "x": 17,
+                 "y": 64
+               },
+               "id": 10,
+               "legend": {
+                 "avg": false,
+                 "current": false,
+                 "max": false,
+                 "min": false,
+                 "show": true,
+                 "total": false,
+                 "values": false
+               },
+               "lines": true,
+               "linewidth": 1,
+               "nullPointMode": "null",
+               "options": {
+                 "dataLinks": []
+               },
+               "percentage": false,
+               "pointradius": 2,
+               "points": false,
+               "renderer": "flot",
+               "seriesOverrides": [],
+               "spaceLength": 10,
+               "stack": false,
+               "steppedLine": false,
+               "targets": [
+                 {
+                   "expr": "sum(increase(event_proxy_response_time_bucket{platform=~\"$platform\",env=~\"$mode\",le=\"+Inf\"}[$__range]))-sum(increase(event_proxy_response_time_bucket{platform=~\"$platform\",env=~\"$mode\",le=\"200\"}[$__range]))",
+                   "format": "time_series",
+                   "legendFormat": "> 200 ms",
+                   "refId": "A"
+                 }
+               ],
+               "thresholds": [],
+               "timeFrom": null,
+               "timeRegions": [],
+               "timeShift": null,
+               "title": "Response Time (per sec)",
+               "tooltip": {
+                 "shared": true,
+                 "sort": 0,
+                 "value_type": "individual"
+               },
+               "type": "graph",
+               "xaxis": {
+                 "buckets": 10,
+                 "max": 100,
+                 "min": 0.1,
+                 "mode": "time",
+                 "name": null,
+                 "show": true,
+                 "values": []
+               },
+               "yaxes": [
+                 {
+                   "format": "short",
+                   "label": null,
+                   "logBase": 1,
+                   "max": null,
+                   "min": null,
+                   "show": true
+                 },
+                 {
+                   "format": "short",
+                   "label": null,
+                   "logBase": 1,
+                   "max": null,
+                   "min": null,
+                   "show": true
+                 }
+               ],
+               "yaxis": {
+                 "align": false,
+                 "alignLevel": null
+               }
+             }
+           ],
+           "refresh": "5s",
+           "schemaVersion": 20,
+           "style": "dark",
+           "tags": [],
+           "templating": {
+             "list": [
+               {
+                 "allValue": null,
+                 "current": {
+                   "selected": true,
+                   "tags": [],
+                   "text": "ios",
+                   "value": "ios"
+                 },
+                 "hide": 0,
+                 "includeAll": false,
+                 "label": "Platform",
+                 "multi": false,
+                 "name": "platform",
+                 "options": [
+                   {
+                     "selected": false,
+                     "text": "android",
+                     "value": "android"
+                   },
+                   {
+                     "selected": true,
+                     "text": "ios",
+                     "value": "ios"
+                   }
+                 ],
+                 "query": "android, ios",
+                 "skipUrlSync": false,
+                 "type": "custom"
+               },
+               {
+                 "allValue": null,
+                 "current": {
+                   "selected": true,
+                   "tags": [],
+                   "text": "prod",
+                   "value": "prod"
+                 },
+                 "hide": 0,
+                 "includeAll": false,
+                 "label": "Mode",
+                 "multi": false,
+                 "name": "mode",
+                 "options": [
+                   {
+                     "selected": false,
+                     "text": "dev",
+                     "value": "dev"
+                   },
+                   {
+                     "selected": true,
+                     "text": "prod",
+                     "value": "prod"
+                   }
+                 ],
+                 "query": "dev, prod",
+                 "skipUrlSync": false,
+                 "type": "custom"
+               },
+               {
+                 "allValue": null,
+                 "current": {
+                   "tags": [],
+                   "text": "All",
+                   "value": "$__all"
+                 },
+                 "hide": 0,
+                 "includeAll": true,
+                 "label": "Node",
+                 "multi": false,
+                 "name": "node",
+                 "options": [
+                   {
+                     "selected": false,
+                     "text": "All",
+                     "value": "$__all"
+                   },
+                   {
+                     "selected": false,
+                     "text": "ip-172-31-10-100.ec2.internal",
+                     "value": "ip-172-31-10-100.ec2.internal"
+                   },
+                   {
+                     "selected": false,
+                     "text": "ip-172-31-64-172.ec2.internal",
+                     "value": "ip-172-31-64-172.ec2.internal"
+                   },
+                   {
+                     "selected": true,
+                     "text": "ip-172-31-17-237.ec2.internal",
+                     "value": "ip-172-31-17-237.ec2.internal"
+                   }
+                 ],
+                 "query": "ip-172-31-10-100.ec2.internal,  ip-172-31-64-172.ec2.internal, ip-172-31-17-237.ec2.internal",
+                 "skipUrlSync": false,
+                 "type": "custom"
+               }
+             ]
+           },
+           "time": {
+             "from": "now-15m",
+             "to": "now"
+           },
+           "timepicker": {
+             "refresh_intervals": [
+               "5s",
+               "10s",
+               "30s",
+               "1m",
+               "5m",
+               "15m",
+               "30m",
+               "1h",
+               "2h",
+               "1d"
+             ]
+           },
+           "timezone": "",
+           "title": "Event Proxy",
+           "uid": "itL81vLZf",
+           "version": 16
+         }
+  kind: ConfigMap
+  metadata:
+    name: grafana-dashboard-event-proxy
+    namespace: monitoring
+kind: ConfigMapList

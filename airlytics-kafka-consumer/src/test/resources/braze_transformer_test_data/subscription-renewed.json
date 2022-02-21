@@ -1,0 +1,16 @@
+{
+  "name": "subscription-renewed",
+  "userId": "C24FB536-E89A-45FB-B46A-CF05782861D4",
+  "eventId": "59881123-2c82-3b5e-9153-a60a8bf8614d",
+  "platform": "ios",
+  "eventTime": 1592269996000,
+  "schemaVersion": "1.0",
+  "attributes": {
+    "premiumProductId": "com.product.iap.renewing.1month.pro",
+    "subscriptionPeriod": 4.0,
+    "expirationDate": 1613135061000,
+    "previousExpirationDate": 1592269996000,
+    "revenueUsdMicros": 4990000
+  },
+  "productId": "7900f30b-8f47-4829-95c5-9d4d6e8564ee"
+}

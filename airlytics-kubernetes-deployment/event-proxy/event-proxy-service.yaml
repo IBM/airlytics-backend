@@ -1,0 +1,21 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: event-proxy
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+  namespace: airlytics
+  labels:
+    app: event-proxy
+spec:
+  ports:
+  - name: web
+    protocol: TCP
+    port: 8081
+    targetPort: 8081
+  - name: metrics
+    protocol: TCP
+    port: 8084
+    targetPort: 8084
+  selector:
+    app: event-proxy

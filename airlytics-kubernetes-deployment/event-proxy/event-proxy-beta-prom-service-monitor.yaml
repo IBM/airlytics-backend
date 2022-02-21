@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    serviceapp: event-proxy-service-monitor
+  name: event-proxy-service-monitor-beta
+  namespace: monitoring
+spec:
+  endpoints:
+    - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+      interval: 15s
+      port: metrics
+  namespaceSelector:
+    matchNames:
+      - airlytics
+  selector:
+    endpoints:
+      - port: metrics
+    matchLabels:
+      app: event-proxy-beta

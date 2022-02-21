@@ -1,0 +1,74 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: braze-currents-consumer
+  namespace: airlytics
+  labels:
+    app: braze-currents-consumer
+  annotations:
+    deployment.kubernetes.io/revision: '3'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: braze-currents-consumer
+  template:
+    metadata:
+      labels:
+        app: braze-currents-consumer
+    spec:
+      volumes:
+        - name: persistence-pv-storage
+          persistentVolumeClaim:
+            claimName: consumers-aws-efs
+      nodeSelector:
+        pod-type: <POD_TYPE>
+      containers:
+        - name: braze-currents-consumer
+          image: <IMAGE_STORE_SERVER>/airlytics/consumer:latest
+          args: ["braze_currents"]
+          volumeMounts:
+            - mountPath: "/usr/src/app/data"
+              name: persistence-pv-storage
+          ports:
+            - containerPort: 8084
+              name: metrics
+              protocol: TCP
+          env:
+            - name: AIRLYTICS_ENVIRONMENT
+              value: 'ALL'
+            - name: AIRLYTICS_PRODUCT
+              value: 'ALL'
+            - name: METRICS_PORT
+              value:  '8084'
+            - name: AIRLYTICS_DEPLOYMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: airlytics-deployments-config
+                  key: airlytics.deployment
+          livenessProbe:
+            httpGet:
+              path: /healthcheck
+              port: metrics
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          resources:
+            limits:
+              memory: 1Gi
+            requests:
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600

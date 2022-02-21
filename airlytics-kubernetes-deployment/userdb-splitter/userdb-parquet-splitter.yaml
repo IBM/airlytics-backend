@@ -1,0 +1,66 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: userdb-parquet-splitter
+  namespace: airlytics
+  labels:
+    app: userdb-parquet-splitter
+  annotations:
+    deployment.kubernetes.io/revision: '3'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: userdb-parquet-splitter
+  template:
+    metadata:
+      labels:
+        app: userdb-parquet-splitter
+    spec:
+      nodeSelector:
+        pod-type: memory
+      containers:
+        - name: userdb-parquet-splitter
+          image: <IMAGE_STORE_SERVER>/airlytics/userdb-periodical-process:latest
+          env:
+            - name: AIRLYTICS_ENVIRONMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: airlytics-deployments-config
+                  key: airlytics.environment
+            - name: USERDB_PROCESS_TYPE
+              value: 'splitter'
+            - name: DB_TYPE
+              value: 'DB-RO'
+            - name: AIRLYTICS_DEPLOYMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: airlytics-deployments-config
+                  key: airlytics.deployment
+          ports:
+            - containerPort: 8084
+              name: metrics
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthcheck
+              port: metrics
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          resources:
+            limits:
+              memory: 8Gi
+            requests:
+              memory: 8Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600

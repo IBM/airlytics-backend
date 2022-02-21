@@ -1,0 +1,13 @@
+{
+  "acknowledgementState" : 1,
+  "autoRenewing" : true,
+  "countryCode" : "ID",
+  "developerPayload" : "{\"amount\":14000000000,\"currencySymbol\":\"IDR\",\"subscriptionPeriod\":\"P1M\"}",
+  "expiryTimeMillis" : "1610556628045",
+  "kind" : "androidpublisher#subscriptionPurchase",
+  "orderId" : "GPA.3382-8870-1509-12883",
+  "paymentState" : 1,
+  "priceAmountMicros" : "14000000000",
+  "priceCurrencyCode" : "IDR",
+  "startTimeMillis" : "1607871036662"
+}

@@ -1,0 +1,3 @@
+"user_id","ai_high_churn_probability","ai_states_current_location_30d","ai_push_message","ai_wears_hats"
+"6b3e2f4b-4b5a-462f-8700-1db11d6dd2e8",0.123,"{NY,CN}","Test message 1","true"
+"7900f30b-8f47-4829-95c5-9d4d6e8564ee",0.456,"{CA,TX}","Test message 2","false"

@@ -1,0 +1,13 @@
+{
+  "acknowledgementState" : 1,
+  "autoRenewing" : true,
+  "countryCode" : "US",
+  "developerPayload" : "",
+  "expiryTimeMillis" : "1627920967332",
+  "kind" : "androidpublisher#subscriptionPurchase",
+  "orderId" : "GPA.3319-4618-8279-27532..0",
+  "paymentState" : 0,
+  "priceAmountMicros" : "29990000",
+  "priceCurrencyCode" : "USD",
+  "startTimeMillis" : "1626742613210"
+}

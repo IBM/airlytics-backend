@@ -1,0 +1,38 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<suite name = "Analytics Reporter Suite" parallel="methods">
+    <listeners>
+        <listener class-name = "org.testng.reporters.EmailableReporter2"/>
+        <listener class-name = "com.ibm.analytics.queryservice.reporter.CustomMainReporter"/>
+        <listener class-name = "com.ibm.analytics.queryservice.reporter.CustomReporter"/>
+    </listeners>
+    <test name = "mySql sample test">
+        <parameter name = "platform" value="android_dev"/>
+        <parameter name = "daysBefore" value="1"/>
+        <parameter name = "testVersion" value="1.0"/>
+        <parameter name = "clientType" value="mySql"/>
+        <parameter name = "dbName" value="analytics"/>
+        <parameter name = "tableName" value="SUCCESS_EVENTS"/>
+        <parameter name = "errorTableName" value="ERROR_EVENTS"/>
+        <parameter name = "minVersion" value="1.0"/>
+        <parameter name = "doLoadData" value="true"/>
+        <classes>
+            <class name = "com.ibm.analytics.queryservice.validations.SampleQueriesValidations" />
+        </classes>
+    </test>
+<!--    <test name = "Analytics Reporter test iOS prod">-->
+<!--        <parameter name = "platform" value="ios_prod"/>-->
+<!--        <parameter name = "daysBefore" value="1"/>-->
+<!--        <parameter name = "testVersion" value="12.4.1"/>-->
+<!--        <parameter name = "testVersion" value="1.0"/>-->
+<!--        <parameter name = "clientType" value="athenaAws"/>-->
+<!--        <parameter name = "dbName" value="airlytics"/>-->
+<!--        <parameter name = "catalog" value="catalog1"/>-->
+<!--        <parameter name = "outputBucket" value="bucket1"/>-->
+<!--        <parameter name = "tableName" value="SUCCESS_EVENTS"/>-->
+<!--        <parameter name = "errorTableName" value="ERROR_EVENTS"/>-->
+<!--        <parameter name = "minVersion" value="1.0"/>-->
+<!--        <classes>-->
+<!--            <class name = "com.ibm.analytics.queryservice.validations.AthenaAWSQueriesValidations" />-->
+<!--        </classes>-->
+<!--    </test>-->
+</suite>

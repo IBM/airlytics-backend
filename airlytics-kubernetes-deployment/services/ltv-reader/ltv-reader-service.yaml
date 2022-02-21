@@ -1,0 +1,24 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: ltv-reader
+  namespace: airlytics
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: <cert-arn>
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    # Only run SSL on the port named "https" below.
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "https"
+  labels:
+    app: ltv-reader
+spec:
+  ports:
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 8081
+    - name: metrics
+      protocol: TCP
+      port: 8084
+      targetPort: 8084
+  selector:
+    app: ltv-reader

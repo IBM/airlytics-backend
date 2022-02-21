@@ -1,0 +1,13 @@
+{
+  "acknowledgementState" : 1,
+  "autoRenewing" : true,
+  "countryCode" : "US",
+  "developerPayload" : "{\"amount\":990000,\"currencySymbol\":\"USD\",\"subscriptionPeriod\":\"P1M\"}",
+  "expiryTimeMillis" : "1611415611058",
+  "kind" : "androidpublisher#subscriptionPurchase",
+  "orderId" : "GPA.3323-7968-7338-46967..6",
+  "paymentState" : 1,
+  "priceAmountMicros" : "990000",
+  "priceCurrencyCode" : "USD",
+  "startTimeMillis" : "1589732248223"
+}

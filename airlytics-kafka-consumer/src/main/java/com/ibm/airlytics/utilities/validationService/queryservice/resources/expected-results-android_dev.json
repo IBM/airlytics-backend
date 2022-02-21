@@ -1,0 +1,21 @@
+{
+        "mode": "dev",
+        "successRates": {
+                "app-crash": 1,
+                "app-start": 2,
+                "page-viewed": 2,
+                "purchase-attempted": 1,
+                "session-start": 2,
+                "session-end": 2,
+                "card-clicked": 1
+        },
+        "errorRates": {
+                "app-crash": 1,
+                "app-start": 0,
+                "page-viewed": 0,
+                "purchase-attempted": 0,
+                "session-start": 0,
+                "session-end": 0,
+                "card-clicked": 0
+        }
+}

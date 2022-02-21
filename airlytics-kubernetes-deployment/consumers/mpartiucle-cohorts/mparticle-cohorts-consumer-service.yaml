@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: mparticle-cohorts-consumer
+  namespace: airlytics
+  labels:
+    app: mparticle-cohorts-consumer
+spec:
+  ports:
+  - name: metrics
+    protocol: TCP
+    port: 8084
+    targetPort: 8084
+  selector:
+    app: mparticle-cohorts-consumer
+    

@@ -1,0 +1,22 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: secure-event-probe-proxy-service
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: <cert-arn>
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: https
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+  namespace: airlytics
+  labels:
+    app: secure-event-probe-proxy-service
+spec:
+  ports:
+  - name: https
+    protocol: TCP
+    port: 443
+    targetPort: 8081
+  externalTrafficPolicy: Cluster
+  selector:
+    app: event-proxy
+  type: LoadBalancer

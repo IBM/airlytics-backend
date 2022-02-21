@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: amplitude-transform-consumer
+  namespace: airlytics
+  labels:
+    app: amplitude-transform-consumer
+spec:
+  ports:
+  - name: metrics
+    protocol: TCP
+    port: 8084
+    targetPort: 8084
+  selector:
+    app: amplitude-transform-consumer

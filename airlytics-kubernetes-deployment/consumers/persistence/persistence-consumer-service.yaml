@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: persistence-consumer
+  namespace: airlytics
+  labels:
+    app: persistence-consumer
+spec:
+  ports:
+  - name: metrics
+    protocol: TCP
+    port: 8084
+    targetPort: 8084
+  selector:
+    app: persistence-consumer

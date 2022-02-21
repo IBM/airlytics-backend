@@ -1,0 +1,59 @@
+﻿kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: kafdrop
+  namespace: airlytics
+  labels:
+    app: kafdrop
+  annotations:
+    deployment.kubernetes.io/revision: '3'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafdrop
+  template:
+    metadata:
+      labels:
+        app: kafdrop
+    spec:
+      nodeSelector:
+        pod-type: <POD_TYPE>
+      containers:
+      - name: kafdrop
+        image: <IMAGE_STORE_SERVER>/kafdrop-airlytics:latest
+        ports:
+        - containerPort: 9000
+          name: web
+          protocol: TCP
+        env:
+        - name: SERVER_SERVLET_CONTEXTPATH
+          value: '/'
+        - name: KAFKA_PROPERTIES
+          #security.protocol=SSL
+          value: 'c2VjdXJpdHkucHJvdG9jb2w9U1NMCg=='
+        - name: KAFKA_BROKERCONNECT
+          valueFrom:
+            configMapKeyRef:
+              name: airlytics-deployments-config
+              key: kafak.brokers.connectors
+        resources:
+          requests:
+            cpu: "1"
+          limits:
+            cpu: "1"
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600

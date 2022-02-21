@@ -1,0 +1,118 @@
+﻿kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: event-proxy
+  namespace: airlytics
+  labels:
+    app: event-proxy
+  annotations:
+    deployment.kubernetes.io/revision: '3'
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: event-proxy
+  template:
+    metadata:
+      labels:
+        app: event-proxy
+    spec:
+      initContainers:
+        - name: init-sysctl
+          image: busybox:1.28
+          command:
+            - sysctl
+            - -w
+            - net.core.somaxconn=50000
+            - net.ipv4.tcp_max_syn_backlog=30000
+            - net.ipv4.tcp_fin_timeout=10
+            - net.ipv4.tcp_tw_reuse=1
+            - net.ipv4.tcp_keepalive_intvl=15
+            - net.ipv4.tcp_keepalive_probes=5
+            - net.ipv4.tcp_max_tw_buckets=2000000
+            - net.netfilter.nf_conntrack_tcp_timeout_time_wait=5
+          securityContext:
+            privileged: true
+            runAsUser: 0
+            runAsNonRoot: False
+      nodeSelector:
+        pod-type: event-proxy
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - event-proxy
+                topologyKey: kubernetes.io/hostname
+      containers:
+      - name: event-proxy
+        image: <IMAGE_STORE_SERVER>/airlytics/event-proxy:150P-373febb
+        ports:
+        - containerPort: 8084
+          name: metrics
+          protocol: TCP
+        - containerPort: 8080
+          name: web
+          protocol: TCP
+        env:
+        - name: CLUSTER
+          value: 'true'
+        - name: SSL
+          value: 'false'
+        - name: LOCAL_HOST
+          value: '0.0.0.0'
+        - name: SWAGGER
+          value: 'true'
+        - name: PORT
+          value:  '8081'
+        - name: METRICS_PORT
+          value:  '8084'
+        - name: REMOTE_CONFIG_REFRESH_PERIOD
+          value:  '600000'
+        - name: REMOTE_SCHEMA_CONFIG_REFRESH_PERIOD
+          value:  '1800000'
+        - name: EVENT_SCHEMA_BUCKET
+          valueFrom:
+            configMapKeyRef:
+              name: airlytics-deployments-config
+              key: event.proxy.config.bucket
+        - name: SSL_PRIVATE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: event-proxy-certificate
+              key: key
+        - name: SSL_CERTIFICATE
+          valueFrom:
+            secretKeyRef:
+              name: event-proxy-certificate
+              key: certificate
+        - name: BUILD_NUMBER
+          value: '0'
+        - name: VERSION
+          value: '1.0'
+        readinessProbe:
+          tcpSocket:
+            port: 8081
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600

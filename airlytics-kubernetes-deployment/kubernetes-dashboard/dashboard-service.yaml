@@ -1,0 +1,21 @@
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard-lb
+  namespace: kubernetes-dashboard
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: <cert-arn>
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    # Only run SSL on the port named "https" below.
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "https"
+spec:
+  ports:
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 9090
+  selector:
+    k8s-app: kubernetes-dashboard-not-secure
+  type: LoadBalancer

@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: grafana-sso
+  name: grafana-sso
+  namespace: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana-sso
+  template:
+    metadata:
+      labels:
+        app: grafana-sso
+    spec:
+      containers:
+      - image: grafana/grafana:7.0.3
+        name: grafana-sso
+        ports:
+        - containerPort: 3000
+          name: http
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: http
+        env:
+          - name: GF_AUTH_BASIC_ENABLED
+            value: 'false'
+          - name: GF_AUTH_OAUTH_AUTO_LOGIN
+            value: 'true'
+          - name: GF_AUTH_GENERIC_OAUTH_EMAIL_ATTRIBUTE_PATH
+            value: 'emailAddress'
+          - name: GF_ANALYTICS_REPORTING_ENABLED
+            value: 'false'
+          - name: GF_SERVER_ROOT_URL
+            value: 'GF_SERVER_ROOT_URL'
+          - name: GF_AUTH_GENERIC_OAUTH_NAME
+            value: 'w3id'
+          - name: GF_AUTH_GENERIC_OAUTH_ENABLED
+            value: 'true'
+          - name: GF_AUTH_GENERIC_OAUTH_AUTH_URL
+            value: 'GF_AUTH_GENERIC_OAUTH_AUTH_URL'
+          - name: GF_AUTH_GENERIC_OAUTH_ALLOW_SIGN_UP
+            value: 'false'
+          - name: GF_AUTH_GENERIC_OAUTH_CLIENT_ID
+            value: 'GF_AUTH_GENERIC_OAUTH_CLIENT_ID'
+          - name: GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET
+            value: 'GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET'
+          - name: GF_AUTH_GENERIC_OAUTH_SCOPES
+            value: 'openid email name'
+          - name: GF_AUTH_GENERIC_OAUTH_TOKEN_URL
+            value: 'GF_AUTH_GENERIC_OAUTH_TOKEN_URL'
+        resources:
+          limits:
+            cpu: 200m
+            memory: 400Mi
+          requests:
+            cpu: 100m
+            memory: 200Mi
+        volumeMounts:
+        - mountPath: /var/lib/grafana
+          name: grafana-storage
+          readOnly: false
+        - mountPath: /etc/grafana/provisioning/datasources
+          name: grafana-datasources
+          readOnly: false
+      nodeSelector:
+        beta.kubernetes.io/os: linux
+        pod-type: <POD_TYPE>
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+      serviceAccountName: grafana
+      volumes:
+      - name: grafana-storage
+        persistentVolumeClaim:
+         claimName: efs-grafana
+      - name: grafana-datasources
+        secret:
+          secretName: grafana-datasources
+
+

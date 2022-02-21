@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: polls
+  namespace: airlytics
+  labels:
+    app: polls
+spec:
+  ports:
+  - name: metrics
+    protocol: TCP
+    port: 8084
+    targetPort: 8084
+  selector:
+    app: polls

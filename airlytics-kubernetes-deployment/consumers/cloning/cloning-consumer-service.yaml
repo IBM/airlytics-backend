@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: cloning-consumer
+  namespace: airlytics
+  labels:
+    app: cloning-consumer
+spec:
+  ports:
+  - name: metrics
+    protocol: TCP
+    port: 8084
+    targetPort: 8084
+  selector:
+    app: cloning-consumer

@@ -1,0 +1,57 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.2.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'java'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.ibm.airlytics'
+version = '1.0'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+	maven {
+		url = artifactory_url + artifactory_repo_key_airlock
+		credentials {
+			username artifactory_username
+			password artifactory_password
+		}
+	}
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	compile project(':retention-tracker-infrastructure')
+	compile 'com.turo:pushy:0.13.10'
+	compile group: 'com.github.mlaccetti', name: 'javapns', version: '2.3.2'
+	compile group: 'com.notnoop.apns', name: 'apns', version: '1.0.0.Beta6'
+	implementation 'com.google.firebase:firebase-admin:6.11.0'
+	implementation('org.postgresql:postgresql')
+	implementation  group: 'com.airlock', name: 'airlock-java-sources', version: '1.1.0'
+	implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.2.2'
+	implementation group: 'io.prometheus', name: 'simpleclient', version: '0.8.0'
+	implementation group: 'io.prometheus', name: 'simpleclient_hotspot', version: '0.8.0'
+	implementation group: 'io.prometheus', name: 'simpleclient_servlet', version: '0.8.0'
+
+	// web server for health and monitoring
+	implementation group: 'io.undertow', name: 'undertow-core', version: '2.0.28.Final'
+	implementation group: 'io.undertow', name: 'undertow-servlet', version: '2.0.28.Final'
+}
+
+configurations.all {
+	exclude module: 'slf4j-log4j12'
+}
+
+
+test {
+	useJUnitPlatform()
+}
+
+bootJar {
+	archiveFileName = "retention-tracker-push-handler.jar"
+}

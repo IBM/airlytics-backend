@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="25Q4mcFU3eo09tOGQVO1EcCrkzM" />
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="344" y="94" key="CommitChangelistDialog2" timestamp="1645446343318">
+      <screen x="0" y="25" width="1680" height="940" />
+    </state>
+    <state x="344" y="94" key="CommitChangelistDialog2/0.25.1680.940@0.25.1680.940" timestamp="1645446343318" />
+    <state x="440" y="232" key="Vcs.Push.Dialog.v2" timestamp="1645446276518">
+      <screen x="0" y="25" width="1680" height="940" />
+    </state>
+    <state x="440" y="232" key="Vcs.Push.Dialog.v2/0.25.1680.940@0.25.1680.940" timestamp="1645446276518" />
+    <state x="537" y="290" key="git4idea.merge.GitPullDialog" timestamp="1645446267997">
+      <screen x="0" y="25" width="1680" height="940" />
+    </state>
+    <state x="537" y="290" key="git4idea.merge.GitPullDialog/0.25.1680.940@0.25.1680.940" timestamp="1645446267997" />
+  </component>
+</project>

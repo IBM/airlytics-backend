@@ -1,0 +1,36 @@
+{
+  "devS3Path": "https://s3.amazonaws.com/airlockprod/PROD1/",
+  "entitlementsRoot": {
+    "entitlements": [],
+    "features": [],
+    "type": "ROOT",
+    "uniqueId": "3ccd66fb-e290-48ea-830c-67704cea75a7"
+  },
+  "defaultLanguage": "en",
+  "productId": "055793c9-9c97-49cb-b22d-38016576b638",
+  "s3Path": "https://s.w-x.co/airlock/PROD1/",
+  "supportedLanguages": [
+    "en"
+  ],
+  "seasonId": "81fd1d24-dac8-4622-af68-2ca28897d8fa",
+  "root": {
+    "entitlements": [],
+    "features": [
+      {
+        "defaultConfiguration": null,
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [],
+        "name": "Air Cohorts Service",
+        "namespace": "Services",
+        "noCachedResults": true,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "1bf571c8-1392-437f-922e-382be128c13a"
+      }
+    ],
+    "type": "ROOT",
+    "uniqueId": "d692b898-c76c-43e6-93dd-62661a5f0e1d"
+  },
+  "version": "V2.5",
+  "productName": "Airlytics Kafka Consumers"
+}

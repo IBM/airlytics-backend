@@ -1,0 +1,46 @@
+plugins {
+	id 'org.springframework.boot' version '2.6.3'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.ibm.weather'
+version = '1.0'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+	maven {
+		url = artifactory_url + artifactory_repo_key_airlock
+		credentials {
+			username artifactory_username
+			password artifactory_password
+		}
+	}
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-aop'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
+	implementation 'org.postgresql:postgresql'
+
+	implementation 'org.json:json:20171018'
+	implementation 'com.google.code.gson:gson'
+	implementation 'org.apache.commons:commons-lang3'
+	implementation group: 'commons-io', name: 'commons-io', version: '2.7'
+	implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
+	implementation group: 'com.opencsv', name: 'opencsv', version: '5.2'
+	implementation 'com.squareup.okhttp3:okhttp:3.4.1'
+	implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.4.1'
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	testCompile('ru.yandex.qatools.embed:postgresql-embedded:2.10')
+}
+
+test {
+	useJUnitPlatform()
+}

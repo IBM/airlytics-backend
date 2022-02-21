@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: consumers-efs-provisioner
+data:
+  file.system.id: <FILE_SYSTEM_ID>
+  aws.region: <REGION>
+  provisioner.name: airlytics.ibm.com/consumers-aws-efs
+  dns.name: ""

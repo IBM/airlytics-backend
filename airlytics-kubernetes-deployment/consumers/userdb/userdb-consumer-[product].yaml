@@ -1,0 +1,74 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: userdb-consumer-<PRODUCT>
+  namespace: airlytics
+  labels:
+    app: userdb-consumer
+  annotations:
+    deployment.kubernetes.io/revision: '3'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: userdb-consumer
+  template:
+    metadata:
+      labels:
+        app: userdb-consumer
+    spec:
+      nodeSelector:
+        pod-type: <POD_TYPE>
+      containers:
+        - name: userdb-consumer
+          image: <IMAGE_STORE_SERVER>/airlytics/consumer:latest
+          args: ["userdb"]
+          ports:
+            - containerPort: 8084
+              name: metrics
+              protocol: TCP
+          env:
+            #- name: AIRLOCK_USER_GROUPS
+            #  value: 'Dev'
+            - name: AIRLYTICS_ENVIRONMENT
+              value: 'DEV'
+            - name: AIRLYTICS_PRODUCT
+              value: '<PRODUCT>'
+            - name: METRICS_PORT
+              value: '8084'
+            - name: USERDB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: userdb-secret
+                  key: airlytics-all-rw
+            - name: AIRLYTICS_DEPLOYMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: airlytics-deployments-config
+                  key: airlytics.deployment
+          livenessProbe:
+            httpGet:
+              path: /healthcheck
+              port: metrics
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          resources:
+            limits:
+              memory: 1Gi
+            requests:
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600

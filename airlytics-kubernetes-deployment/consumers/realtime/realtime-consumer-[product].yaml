@@ -1,0 +1,67 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: realtime-consumer-<PRODUCT>
+  namespace: airlytics
+  labels:
+    app: realtime-consumer
+  annotations:
+    deployment.kubernetes.io/revision: '3'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: realtime-consumer
+  template:
+    metadata:
+      labels:
+        app: realtime-consumer
+    spec:
+      nodeSelector:
+        pod-type: <POD_TYPE>
+      containers:
+        - name: realtime-consumer
+          image: <IMAGE_STORE_SERVER>/airlytics/consumer:latest
+          args: ["realtime"]
+          ports:
+            - containerPort: 8084
+              name: metrics
+              protocol: TCP
+          env:
+            - name: AIRLYTICS_ENVIRONMENT
+              value: 'PROD'
+            - name: AIRLYTICS_PRODUCT
+              value: '<PRODUCT>'
+            - name: METRICS_PORT
+              value:  '8084'
+            - name: AIRLYTICS_DEPLOYMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: airlytics-deployments-config
+                  key: airlytics.deployment
+          livenessProbe:
+            httpGet:
+              path: /healthcheck
+              port: metrics
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          resources:
+            limits:
+              memory: 1Gi
+            requests:
+              memory: 1Gi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600

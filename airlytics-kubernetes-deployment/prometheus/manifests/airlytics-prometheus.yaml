@@ -1,0 +1,43 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  labels:
+    app: prometheus
+    prometheus: airlytics-prometheus
+  name: airlytics-prometheus
+  namespace: monitoring
+spec:
+  securityContext:
+    runAsUser: 1000
+    fsGroup: 2000
+    runAsNonRoot: true
+  alerting:
+    alertmanagers:
+    - name: alertmanager-main
+      namespace: monitoring
+      port: web
+  image: quay.io/prometheus/prometheus:v2.22.1
+  nodeSelector:
+    pod-type: <POD_TYPE>
+  logLevel: info
+  paused: false
+  replicas: 1
+  retention: 90d
+  routePrefix: /
+  ruleSelector:
+    matchLabels:
+      prometheus: airlytics-prometheus
+      role: alert-rules
+  serviceAccountName: prometheus-k8s
+  serviceMonitorNamespaceSelector: {}
+  serviceMonitorSelector:
+    matchExpressions:
+    - key: serviceapp
+      operator: Exists
+  storage:
+    volumeClaimTemplate:
+      spec:
+        storageClassName: aws-efs
+        resources:
+          requests:
+            storage: 100Gi

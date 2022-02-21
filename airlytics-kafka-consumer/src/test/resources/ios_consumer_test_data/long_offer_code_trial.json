@@ -1,0 +1,78 @@
+{
+  "environment": "Production",
+  "receipt": {
+    "receipt_type": "Production",
+    "adam_id": 295646461,
+    "app_item_id": 295646461,
+    "bundle_id": "com.product",
+    "application_version": "424895",
+    "download_id": 31090318670461,
+    "version_external_identifier": 840509960,
+    "receipt_creation_date": "2021-02-27 02:26:38 Etc/GMT",
+    "receipt_creation_date_ms": "1614392798000",
+    "receipt_creation_date_pst": "2021-02-26 18:26:38 America/Los_Angeles",
+    "request_date": "2021-03-04 11:35:39 Etc/GMT",
+    "request_date_ms": "1614857739025",
+    "request_date_pst": "2021-03-04 03:35:39 America/Los_Angeles",
+    "original_purchase_date": "2020-12-18 13:46:28 Etc/GMT",
+    "original_purchase_date_ms": "1608299188000",
+    "original_purchase_date_pst": "2020-12-18 05:46:28 America/Los_Angeles",
+    "original_application_version": "424857",
+    "in_app": [
+      {
+        "quantity": "1",
+        "product_id": "com.product.iap.renewing.1year.pro",
+        "transaction_id": "110000909643319",
+        "original_transaction_id": "110000909643319",
+        "purchase_date": "2021-01-12 17:47:36 Etc/GMT",
+        "purchase_date_ms": "1610473656000",
+        "purchase_date_pst": "2021-01-12 09:47:36 America/Los_Angeles",
+        "original_purchase_date": "2021-01-12 17:47:37 Etc/GMT",
+        "original_purchase_date_ms": "1610473657000",
+        "original_purchase_date_pst": "2021-01-12 09:47:37 America/Los_Angeles",
+        "expires_date": "2022-01-12 17:47:36 Etc/GMT",
+        "expires_date_ms": "1642009656000",
+        "expires_date_pst": "2022-01-12 09:47:36 America/Los_Angeles",
+        "web_order_line_item_id": "110000366410452",
+        "is_trial_period": "true",
+        "is_in_intro_offer_period": "false",
+        "promotional_offer_id": "44544e45-d398-4b3e-bfaa-325fcac3491a",
+        "in_app_ownership_type": "PURCHASED"
+      }
+    ]
+  },
+  "latest_receipt_info": [
+    {
+      "quantity": "1",
+      "product_id": "com.product.iap.renewing.1year.pro",
+      "transaction_id": "110000909643319",
+      "original_transaction_id": "110000909643319",
+      "purchase_date": "2021-01-12 17:47:36 Etc/GMT",
+      "purchase_date_ms": "1610473656000",
+      "purchase_date_pst": "2021-01-12 09:47:36 America/Los_Angeles",
+      "original_purchase_date": "2021-01-12 17:47:37 Etc/GMT",
+      "original_purchase_date_ms": "1610473657000",
+      "original_purchase_date_pst": "2021-01-12 09:47:37 America/Los_Angeles",
+      "expires_date": "2022-01-12 17:47:36 Etc/GMT",
+      "expires_date_ms": "1642009656000",
+      "expires_date_pst": "2022-01-12 09:47:36 America/Los_Angeles",
+      "web_order_line_item_id": "110000366410452",
+      "is_trial_period": "true",
+      "is_in_intro_offer_period": "false",
+      "promotional_offer_id": "44544e45-d398-4b3e-bfaa-325fcac3491a",
+      "in_app_ownership_type": "PURCHASED",
+      "subscription_group_identifier": "20225210",
+      "offer_code_ref_name": "Test 1 Year Free"
+    }
+  ],
+  "latest_receipt": "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",
+  "pending_renewal_info": [
+    {
+      "auto_renew_product_id": "com.product.iap.renewing.1year.pro",
+      "original_transaction_id": "110000909643319",
+      "product_id": "com.product.iap.renewing.1year.pro",
+      "auto_renew_status": "1"
+    }
+  ],
+  "status": 0
+}

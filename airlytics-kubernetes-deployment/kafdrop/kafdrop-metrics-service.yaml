@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: kafdrop-metrics
+  namespace: airlytics
+  labels:
+    app: kafdrop-metrics
+spec:
+  ports:
+  - name: metrics
+    protocol: TCP
+    port: 8084
+    targetPort: 9000
+  selector:
+    app: kafdrop

@@ -1,0 +1,2 @@
+rootProject.name = 'retention-tracker-push-handler'
+include 'retention-tracker-infrastructure'

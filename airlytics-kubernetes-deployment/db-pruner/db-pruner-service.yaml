@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: db-pruner
+  namespace: airlytics
+  labels:
+    app: db-pruner
+spec:
+  ports:
+  - name: metrics
+    protocol: TCP
+    port: 8084
+    targetPort: 8084
+  selector:
+    app: db-pruner

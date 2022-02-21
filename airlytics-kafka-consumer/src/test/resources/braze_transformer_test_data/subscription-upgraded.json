@@ -1,0 +1,18 @@
+{
+  "name": "subscription-upgraded",
+  "userId": "9E1FE582-8F32-46F1-8FD7-5983801F1E63",
+  "eventId": "aca4ccd1-9cdc-319c-a416-49167937a871",
+  "platform": "ios",
+  "eventTime": 1583347141000,
+  "schemaVersion": "1.0",
+  "attributes": {
+    "newProductId": "com.product.iap.renewing.1year.1c",
+    "previousProductId": "com.product.iap.renewing.1year.1",
+    "trial": true,
+    "expirationDate": 1583606341000,
+    "revenueUsdMicros": 28591401,
+    "duration": "YEARLY",
+    "introPricing": false
+  },
+  "productId": "7900f30b-8f47-4829-95c5-9d4d6e8564ee"
+}

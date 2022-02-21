@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: realtime-consumer
+  namespace: airlytics
+  labels:
+    app: realtime-consumer
+spec:
+  ports:
+  - name: metrics
+    protocol: TCP
+    port: 8084
+    targetPort: 8084
+  selector:
+    app: realtime-consumer

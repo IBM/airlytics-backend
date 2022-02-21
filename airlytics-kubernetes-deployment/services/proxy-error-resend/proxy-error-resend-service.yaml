@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: proxy-error-resend
+  namespace: airlytics
+  labels:
+    app: proxy-error-resend
+spec:
+  ports:
+  - name: metrics
+    protocol: TCP
+    port: 8084
+    targetPort: 8084
+  selector:
+    app: proxy-error-resend

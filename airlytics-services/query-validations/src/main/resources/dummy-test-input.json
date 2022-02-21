@@ -1,0 +1,34 @@
+{
+  "processed": {
+    "stream-results": 22416,
+    "app-crash": 8129,
+    "app-launch": 8022582,
+    "session-start": 26773017,
+    "purchase-attempted": 598,
+    "notification-interacted": 1533612,
+    "user-attributes": 3895891,
+    "page-viewed": 10258862,
+    "session-end": 27001775,
+    "purchase-screen-viewed": 68387,
+    "in-app-message-displayed": 35,
+    "asset-viewed": 6469196,
+    "video-played": 905077,
+    "card-viewed": 25052214
+  },
+  "errors": {
+    "stream-results": 21,
+    "app-crash": 38,
+    "app-launch": 16630,
+    "session-start": 70714,
+    "purchase-attempted": 1,
+    "notification-interacted": 2796,
+    "user-attributes": 7974,
+    "page-viewed": 21483,
+    "location-viewed": 9,
+    "session-end": 13506048,
+    "purchase-screen-viewed": 159,
+    "video-played": 2306,
+    "asset-viewed": 12541,
+    "card-viewed": 57359
+  }
+}

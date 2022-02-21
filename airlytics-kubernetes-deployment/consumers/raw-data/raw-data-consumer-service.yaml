@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: raw-data-consumer
+  namespace: airlytics
+  labels:
+    app: raw-data-consumer
+spec:
+  ports:
+  - name: metrics
+    protocol: TCP
+    port: 8084
+    targetPort: 8084
+  selector:
+    app: raw-data-consumer

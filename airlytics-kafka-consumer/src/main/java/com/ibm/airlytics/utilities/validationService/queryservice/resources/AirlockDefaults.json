@@ -1,0 +1,545 @@
+﻿{
+  "devS3Path": "https://s3.amazonaws.com/airlockprod/PROD1/",
+  "entitlementsRoot": {
+    "entitlements": [],
+    "features": [],
+    "type": "ROOT",
+    "uniqueId": "3ccd66fb-e290-48ea-830c-67704cea75a7"
+  },
+  "defaultLanguage": "en",
+  "productId": "055793c9-9c97-49cb-b22d-38016576b638",
+  "s3Path": "https://s.w-x.co/airlock/PROD1/",
+  "supportedLanguages": [
+    "en"
+  ],
+  "seasonId": "81fd1d24-dac8-4622-af68-2ca28897d8fa",
+  "root": {
+    "entitlements": [],
+    "features": [
+      {
+        "defaultConfiguration": "{\n\t\"maxPollRecords\":600,\n\t\"maxPollIntervalMs\":300000\n}",
+        "defaultIfAirlockSystemIsDown": true,
+        "features": [],
+        "name": "Analytics Consumer",
+        "namespace": "Consumers",
+        "noCachedResults": false,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "1b030e03-9240-47ef-bf8c-92ba162360da"
+      },
+      {
+        "defaultConfiguration": "{\n\t\"threads\":1\n}",
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [],
+        "name": "Multithreaded Consumer",
+        "namespace": "consumers",
+        "noCachedResults": false,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "032d36ba-916d-49be-87bd-091198770f65"
+      },
+      {
+        "defaultConfiguration": "{\n\t\"consumerGroupId\":\"USERDB_CONSUMER\",\n\t\"userTable\":\"users\",\n\t\"additionalUserTables\":[\"users_pi\"],\n\t\"maxPollRecords\":4000,\n\t\"maxPollIntervalMs\":30000,\n\t\"fetchMinBytes\":150000,\n\t\"fetchMaxWaitMs\":500,\n\t\"userCacheSizeInRecords\":50000,\n\t\"numberOfShards\":1000,\n\t\"useSSL\":true\n}",
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [],
+        "name": "UserDB Consumer",
+        "namespace": "Consumers",
+        "noCachedResults": false,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "332ec33f-8944-43bb-abf7-ba392d1a014d"
+      },
+      {
+        "defaultConfiguration": "{\n\n}",
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [],
+        "name": "Persistence Consumer",
+        "namespace": "Consumers",
+        "noCachedResults": false,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "1ece97ec-c63d-4ced-a180-1f679375edd8"
+      },
+      {
+        "defaultConfiguration": "{\n\t\"stream-results\":{\n\t\t\"Best Time To Message.bestTimeToMessage\":{\n\t\t\t\"type\":\"string\",\n\t\t\t\"dbColumn\":\"best_time_to_message\"\n\t\t},\n\t\t\"Churn Sentinel.beWorriedAfter\":{\n\t\t\t\"type\":\"timestamp\",\n\t\t\t\"dbColumn\":\"churn_alert\"\n\t\t},\n\t\t\"Churn Sentinel.past7days\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"sessions_7d\"\n\t\t},\n\t\t\"Churn Sentinel.past30days\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"sessions_30d\"\n\t\t},\n\t\t\"Churn Sentinel.lifetime\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"sessions_lifetime\"\n\t\t},\n\t\t\"Best_Time_To_Message.bestTimeToMessage\":{\n\t\t\t\"type\":\"string\",\n\t\t\t\"dbColumn\":\"best_time_to_message\"\n\t\t},\n\t\t\"Churn_Sentinel.beWorriedAfter\":{\n\t\t\t\"type\":\"timestamp\",\n\t\t\t\"dbColumn\":\"churn_alert\"\n\t\t},\n\t\t\"Churn_Sentinel.past7days\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"sessions_7d\"\n\t\t},\n\t\t\"Churn_Sentinel.past30days\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"sessions_30d\"\n\t\t},\n\t\t\"Churn_Sentinel.lifetime\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"sessions_lifetime\"\n\t\t},\n\t\t\"EventAggregations.in-app-message-displayed_count30days\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"in_app_message_displayed_30d\"\n\t\t},\n\t\t\"EventAggregations.in-app-message-displayed_count7days\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"in_app_message_displayed_7d\"\n\t\t},\n\t\t\"EventAggregations.in-app-message-displayed_lifetime\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"in_app_message_displayed_lifetime\"\n\t\t},\n\t\t\"EventAggregations.messaging-campaign-interacted_count30days\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"in_app_message_interacted_30d\"\n\t\t},\n\t\t\"EventAggregations.messaging-campaign-interacted_count7days\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"in_app_message_interacted_7d\"\n\t\t},\n\t\t\"EventAggregations.messaging-campaign-interacted_lifetime\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"in_app_message_interacted_lifetime\"\n\t\t},\n\t\t\"EventAggregations.in-app-message-supressed_count30days\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"in_app_message_supressed_30d\"\n\t\t},\n\t\t\"EventAggregations.in-app-message-supressed_count7days\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"in_app_message_supressed_7d\"\n\t\t},\n\t\t\"EventAggregations.in-app-message-supressed_lifetime\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"in_app_message_supressed_lifetime\"\n\t\t},\n\t\t\"EventAggregations.app-crash_count30days\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"app_crash_30d\"\n\t\t},\n\t\t\"EventAggregations.app-crash_count7days\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"app_crash_7d\"\n\t\t},\n\t\t\"EventAggregations.app-crash_lifetime\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"app_crash_lifetime\"\n\t\t},\n\t\t\"EFrequency.session-start_experiment\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"experiment_sessions\"\n\t\t},\n\t\t\"EFrequency.in-app-message-displayed_experiment\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"experiment_iam_displayed\"\n\t\t},\n\t\t\"EFrequency.messaging-campaign-interacted_experiment\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"experiment_iam_interacted\"\n\t\t},\n\t\t\"EFrequency.in-app-message-supressed_experiment\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"experiment_iam_suppressed\"\n\t\t},\n\t\t\"MessagingToPurchase.messagesUntilConverted\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"pre_purchase_iam_displayed\"\n\t\t},\n\t\t\"MessagingToPurchase.messagesInteractedUntilConverted\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"pre_purchase_iam_interacted\"\n\t\t},\n\t\t\"MessagingToPurchase.sessionsUntilConverted\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"pre_purchase_sessions\"\n\t\t},\n\t\t\"VideoStats.attempts_365days\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"video_attempts_365d\"\n\t\t},\n\t\t\"VideoStats.seconds_365days\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"video_seconds_365d\"\n\t\t},\n\t\t\"VideoStats.ad_seconds_365days\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"video_ad_seconds_365d\"\n\t\t},\n\t\t\"VideoStats.completed_lifetime\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"video_completed_lifetime\"\n\t\t}\n\t},\n\t\"user-attributes\":{\n\t\t\"pushToken\":{\n\t\t\t\"type\":\"string\",\n\t\t\t\"dbColumn\":\"push_token\"\n\t\t},\n\t\t\"premium\":{\n\t\t\t\"type\":\"boolean\",\n\t\t\t\"dbColumn\":\"premium\"\n\t\t},\n\t\t\"premiumExpirationDate\":{\n\t\t\t\"type\":\"timestamp\",\n\t\t\t\"dbColumn\":\"premium_expiration\"\n\t\t},\n\t\t\"premiumStartDate\":{\n\t\t\t\"type\":\"timestamp\",\n\t\t\t\"dbColumn\":\"premium_start\"\n\t\t},\n\t\t\"premiumProductId\":{\n\t\t\t\"type\":\"string\",\n\t\t\t\"dbColumn\":\"premium_product\"\n\t\t},\n\t\t\"installDate\":{\n\t\t\t\"type\":\"timestamp\",\n\t\t\t\"dbColumn\":\"install_date\"\n\t\t},\n\t\t\"upsId\":{\n\t\t\t\"type\":\"string\",\n\t\t\t\"dbColumn\":\"ups_id\",\n\t\t\t\"dbTable\":\"users_pi\"\n\t\t},\n\t\t\"personalizedAds\":{\n\t\t\t\"type\":\"boolean\",\n\t\t\t\"dbColumn\":\"personalized_ads\"\n\t\t},\n\t\t\"experiment\":{\n\t\t\t\"type\":\"string\",\n\t\t\t\"dbColumn\":\"experiment\"\n\t\t},\n\t\t\"variant\":{\n\t\t\t\"type\":\"string\",\n\t\t\t\"dbColumn\":\"variant\"\n\t\t},\n\t\t\"devUser\":{\n\t\t\t\"type\":\"boolean\",\n\t\t\t\"dbColumn\":\"dev_user\"\n\t\t},\n\t\t\"osVersion\":{\n\t\t\t\"type\":\"string\",\n\t\t\t\"dbColumn\":\"os_version\"\n\t\t},\n\t\t\"pushAuthorization\":{\n\t\t\t\"type\":\"string\",\n\t\t\t\"dbColumn\":\"push_authorization\"\n\t\t},\n\t\t\"deviceModel\":{\n\t\t\t\"type\":\"string\",\n\t\t\t\"dbColumn\":\"device_model\"\n\t\t},\n\t\t\"deviceCountry\":{\n\t\t\t\"type\":\"string\",\n\t\t\t\"dbColumn\":\"device_country\"\n\t\t},\n\t\t\"deviceLanguage\":{\n\t\t\t\"type\":\"string\",\n\t\t\t\"dbColumn\":\"device_language\"\n\t\t},\n\t\t\"deviceTimeZone\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"device_timezone\"\n\t\t},\n\t\t\"devicePlatform\":{\n\t\t\t\"type\":\"string\",\n\t\t\t\"dbColumn\":\"device_platform\"\n\t\t},\n\t\t\"thirdPartyId\":{\n\t\t\t\"type\":\"string\",\n\t\t\t\"dbColumn\":\"third_party_id\"\n\t\t},\n\t\t\"versionInstallDate\":{\n\t\t\t\"type\":\"timestamp\",\n\t\t\t\"dbColumn\":\"version_install_date\"\n\t\t},\n\t\t\"attributionStatus\":{\n\t\t\t\"type\":\"string\",\n\t\t\t\"dbColumn\":\"attribution_status\"\n\t\t},\n\t\t\"attributionCampaign\":{\n\t\t\t\"type\":\"string\",\n\t\t\t\"dbColumn\":\"attribution_campaign\"\n\t\t},\n\t\t\"attributionMediaSource\":{\n\t\t\t\"type\":\"string\",\n\t\t\t\"dbColumn\":\"attribution_media_source\"\n\t\t},\n\t\t\"locationAuthorization\":{\n\t\t\t\"type\":\"string\",\n\t\t\t\"dbColumn\":\"location_authorization\"\n\t\t},\n\t\t\"favoriteLocationsCount\":{\n\t\t\t\"type\":\"integer\",\n\t\t\t\"dbColumn\":\"favorite_locations_count\"\n\t\t},\n\t\t\"subscribedAlerts\":{\n\t\t\t\"type\":\"array of string\",\n\t\t\t\"dbColumn\":\"subscribed_alerts\"\n\t\t},\n\t\t\"widgets\":{\n\t\t\t\"type\":\"json\",\n\t\t\t\"dbColumn\":\"widgets\"\n\t\t},\n\t\t\"rawDeviceModel\":{\n\t\t\t\"type\":\"string\",\n\t\t\t\"dbColumn\":\"raw_device_model\"\n\t\t},\n\t\t\"deviceManufacturer\":{\n\t\t\t\"type\":\"string\",\n\t\t\t\"dbColumn\":\"device_manufacturer\"\n\t\t},\n\t\t\"trackingAuthorization\":{\n\t\t\t\"type\":\"string\",\n\t\t\t\"dbColumn\":\"tracking_authorization\"\n\t\t}\n\t}\n}",
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [],
+        "name": "Dynamic Events",
+        "namespace": "Consumers",
+        "noCachedResults": false,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "1d835d7c-cc2b-4b71-83c3-dba707f874f8"
+      },
+      {
+        "defaultConfiguration": "{\n\t\"name\":{\n\t\t\"type\":\"STRING\",\n\t\t\"required\":true\n\t},\n\t\"userId\":{\n\t\t\"type\":\"STRING\",\n\t\t\"required\":true\n\t},\n\t\"sessionId\":{\n\t\t\"type\":\"STRING\",\n\t\t\"required\":false\n\t},\n\t\"platform\":{\n\t\t\"type\":\"STRING\",\n\t\t\"required\":false\n\t},\n\t\"eventId\":{\n\t\t\"type\":\"STRING\",\n\t\t\"required\":true\n\t},\n\t\"productId\":{\n\t\t\"type\":\"STRING\",\n\t\t\"required\":false\n\t},\n\t\"eventTime\":{\n\t\t\"type\":\"LONG\",\n\t\t\"required\":true\n\t},\n\t\"schemaVersion\":{\n\t\t\"type\":\"STRING\",\n\t\t\"required\":false\n\t},\n\t\"appVersion\":{\n\t\t\"type\":\"STRING\",\n\t\t\"required\":false\n\t},\n\t\"sessionStartTime\":{\n\t\t\"type\":\"LONG\",\n\t\t\"required\":false\n\t}\n}",
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [],
+        "name": "Common Fields",
+        "namespace": "Consumers",
+        "noCachedResults": false,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "e10d5bfd-87f6-4492-9905-a64fe57612ba"
+      },
+      {
+        "defaultConfiguration": "{\n}",
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [],
+        "name": "Events Fields",
+        "namespace": "Consumers",
+        "noCachedResults": false,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "84e35a4e-2465-421a-9d77-ff7d25acc9ba"
+      },
+      {
+        "defaultConfiguration": null,
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [],
+        "name": "Compaction Consumer",
+        "namespace": "Consumers",
+        "noCachedResults": false,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "08ac01b2-aa08-43b9-89ad-f3d6b0a17d02"
+      },
+      {
+        "defaultConfiguration": "{\n\t\"segmentEndpoint\":\"https://proxy.vanta.com\",\n\t\"consumerGroupId\":\"SEGMENT_CONSUMER\"\n}",
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [],
+        "name": "Segment Consumer",
+        "namespace": "Consumers",
+        "noCachedResults": false,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "e0c0d058-640a-45c8-859c-d4d7e38e4c94"
+      },
+      {
+        "defaultConfiguration": "{\n\t\"consumerGroupId\":\"DSR_CONSUMER\",\n\t\"maxPollRecords\":10,\n\t\"maxPollIntervalMs\":3600000\n}",
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [
+          {
+            "defaultConfiguration": null,
+            "defaultIfAirlockSystemIsDown": false,
+            "features": [],
+            "name": "Retriever Config",
+            "namespace": "Consumers",
+            "noCachedResults": false,
+            "rolloutPercentage": 100,
+            "type": "FEATURE",
+            "uniqueId": "34dfd83e-b1e0-4e1a-a0ac-bee343462fcd"
+          },
+          {
+            "defaultConfiguration": null,
+            "defaultIfAirlockSystemIsDown": false,
+            "features": [],
+            "name": "Response Writer Config",
+            "namespace": "Consumers",
+            "noCachedResults": false,
+            "rolloutPercentage": 100,
+            "type": "FEATURE",
+            "uniqueId": "e8670687-5f8b-4c5d-aa82-b25d6d0415b9"
+          },
+          {
+            "defaultConfiguration": "{\n\t\"dbPasswordVar\": \"USERDB_PASSWORD\"\n}",
+            "defaultIfAirlockSystemIsDown": false,
+            "features": [],
+            "name": "DB Config",
+            "namespace": "Consumers",
+            "noCachedResults": false,
+            "rolloutPercentage": 100,
+            "type": "FEATURE",
+            "uniqueId": "8dedda73-611c-4bfe-8214-87903e3dd108"
+          },
+          {
+            "defaultConfiguration": "{\n\t\"dbPasswordVar\": \"USERDB_RO_PASSWORD\"\n}",
+            "defaultIfAirlockSystemIsDown": false,
+            "features": [],
+            "name": "DB read only Config",
+            "namespace": "Consumers",
+            "noCachedResults": false,
+            "rolloutPercentage": 100,
+            "type": "FEATURE",
+            "uniqueId": "e7a36216-7ace-4b50-9294-6e7aae4b6143"
+          },
+          {
+            "defaultConfiguration": "{\n\t\"update\":\"UPDATE users.users SET status = 'DELETED', ups_id = 'DSR_DELETED' WHERE ups_id IN (?)\",\n\t\"update_batch\":\"UPDATE users.users SET status = 'DELETED', ups_id = 'DSR_DELETED' WHERE id = ?\",\n\t\"update_multiple\":\"UPDATE users.users SET status = 'DELETED' WHERE id = ?;UPDATE users.users_pi SET ups_id = 'DSR_DELETED' WHERE id = ?;DELETE from users.user_cohorts WHERE user_id = ?\",\n\t\"query\":\"SELECT id FROM users.users WHERE ups_id IN (%s)\",\n\t\"query_for_ids\":\"SELECT id FROM users.users_pi WHERE ups_id IN (%s)\",\n\t\"query_for_delete\":\"SELECT id, shard, first_session FROM users.users_pi WHERE ups_id IN (%s)\"\n}",
+            "defaultIfAirlockSystemIsDown": false,
+            "features": [],
+            "name": "Delete User",
+            "namespace": "delete",
+            "noCachedResults": false,
+            "rolloutPercentage": 100,
+            "type": "FEATURE",
+            "uniqueId": "84419c11-e6a0-4b71-a0f1-0ea4894f968a"
+          },
+          {
+            "defaultConfiguration": null,
+            "defaultIfAirlockSystemIsDown": false,
+            "features": [],
+            "name": "Delete Writer Config",
+            "namespace": "Consumers",
+            "noCachedResults": false,
+            "rolloutPercentage": 100,
+            "type": "FEATURE",
+            "uniqueId": "64187dfb-a217-43e5-82bf-07c194f7011a"
+          }
+        ],
+        "name": "DSR Consumer",
+        "namespace": "Consumers",
+        "noCachedResults": false,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "4e57b307-2fe0-43be-b002-097c19d0b2ed"
+      },
+      {
+        "defaultConfiguration": null,
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [],
+        "name": "Events ReInjection Consumer",
+        "namespace": "Consumers",
+        "noCachedResults": false,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "d4516e9f-48a1-47ff-9dca-90c206016e94"
+      },
+      {
+        "defaultConfiguration": null,
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [
+          {
+            "defaultConfiguration": "{\n\t\"query\":\"SELECT * FROM users.users WHERE id = ?\"\n}",
+            "defaultIfAirlockSystemIsDown": false,
+            "features": [],
+            "name": "Get user by id",
+            "namespace": "retention",
+            "noCachedResults": false,
+            "rolloutPercentage": 100,
+            "type": "FEATURE",
+            "uniqueId": "c967fce2-f0d2-46b2-b6cd-b86b5bda18d6"
+          },
+          {
+            "defaultConfiguration": "{\n\t\"query\":\"SELECT * FROM users.users WHERE ups_id = ?\"\n}",
+            "defaultIfAirlockSystemIsDown": false,
+            "features": [],
+            "name": "Get user by ups id",
+            "namespace": "db",
+            "noCachedResults": false,
+            "rolloutPercentage": 100,
+            "type": "FEATURE",
+            "uniqueId": "78fdebcf-2b5e-4baf-9ab5-31a4b162035d"
+          },
+          {
+            "defaultConfiguration": "{\n\t\"query\":\"SELECT C1.column_name, C1.data_type, C1.is_nullable FROM information_schema.columns AS C1 WHERE TABLE_NAME = 'users' AND TABLE_SCHEMA='users'\"\n}",
+            "defaultIfAirlockSystemIsDown": false,
+            "features": [],
+            "name": "Get DB Schema",
+            "namespace": "db",
+            "noCachedResults": false,
+            "rolloutPercentage": 100,
+            "type": "FEATURE",
+            "uniqueId": "1d017126-e68b-4aa5-a53e-07208349dcbf"
+          },
+          {
+            "defaultConfiguration": "{\n\t\"query\":\"SELECT * FROM users.users WHERE ups_id IN (%s)\",\n\t\"multiTablesQuery\":\"SELECT BASIC.*,  PI.*, (select array_agg(PP.*) from (users.purchases_users inner join users.purchases on users.purchases.id = users.purchases_users.purchase_id) as PP where PP.user_id = BASIC.id) as PURCHASES_ARRAY FROM ((users.users as BASIC left join users.users_pi as PI ON BASIC.id = PI.id)) WHERE PI.ups_id IN (%s)\",\n\t\"usersForDelete\":\"SELECT BASIC.id, BASIC.shard, BASIC.first_session, PI.ups_id FROM ((users.users as BASIC left join users.users_pi as PI ON BASIC.id = PI.id)) WHERE PI.ups_id IN (%s)\"\n}",
+            "defaultIfAirlockSystemIsDown": false,
+            "features": [],
+            "name": "Get users by ups ids",
+            "namespace": "db",
+            "noCachedResults": false,
+            "rolloutPercentage": 100,
+            "type": "FEATURE",
+            "uniqueId": "11d1cd6e-8d0f-4762-af02-76f745a818cb"
+          }
+        ],
+        "name": "DB Querys",
+        "namespace": "db",
+        "noCachedResults": false,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "a97fec15-076e-440e-9a1e-43915c44522e"
+      },
+      {
+        "defaultConfiguration": null,
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [],
+        "name": "RawData Consumer",
+        "namespace": "Consumers",
+        "noCachedResults": false,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "bc307c14-6cae-4801-a598-2ad18c46ca94"
+      },
+      {
+        "defaultConfiguration": null,
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [],
+        "name": "Cloning Consumer",
+        "namespace": "Consumers",
+        "noCachedResults": false,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "edb74600-2b0f-4d93-8744-25584b0d844d"
+      },
+      {
+        "defaultConfiguration": "{\n\t\"consumerGroupId\":\"REALTIME_DATA_CONSUMER\",\n\t\"maxPollRecords\":6000,\n\t\"maxPollIntervalMs\":30000\n}",
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [],
+        "name": "Real Time Data Consumer",
+        "namespace": "Consumers",
+        "noCachedResults": false,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "76d2f8b3-1f69-4858-9d96-09c0f161e65c"
+      },
+      {
+        "defaultConfiguration": "{\n\t\"consumerGroupId\":\"PURCHASE_ATTR_CONSUMER\",\n\t\"maxPollRecords\":500,\n\t\"useSSL\":true,\n\t\"purchasesTable\":\"users.purchases\",\n\t\"purchasesUsersTable\":\"users.purchases_users\",\n\t\"purchasesDevTable\":\"dev_users.purchases\",\n\t\"purchasesUsersDevTable\":\"dev_users.purchases_users\",\n\t\n}",
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [],
+        "name": "Purchase Attribute Consumer",
+        "namespace": "Consumers",
+        "noCachedResults": false,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "9add4b80-bf9b-4828-8374-9328e809af74"
+      },
+      {
+        "defaultConfiguration": null,
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [],
+        "name": "Air Cohorts Service",
+        "namespace": "Services",
+        "noCachedResults": true,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "1bf571c8-1392-437f-922e-382be128c13a"
+      },
+      {
+        "defaultConfiguration": "{\n\t\"consumerGroupId\":\"TRANSFORMATION_CONSUMER\",\n\t\"maxPollRecords\":1000\n}",
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [],
+        "name": "Transformation Consumer",
+        "namespace": "Consumers",
+        "noCachedResults": false,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "23c34787-fcbb-4f15-9562-3b050c9d8904"
+      },
+      {
+        "defaultConfiguration": null,
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [],
+        "name": "Amplitude Transformation Consumer",
+        "namespace": "Consumers",
+        "noCachedResults": true,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "94494108-3d4f-4f35-8c46-18f9b00c6bed"
+      },
+      {
+        "defaultConfiguration": null,
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [],
+        "name": "Amplitude Forwarding Consumer",
+        "namespace": "Consumers",
+        "noCachedResults": true,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "5527001a-ac82-40bf-a1de-aebe0f34173b"
+      },
+      {
+        "defaultConfiguration": null,
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [
+          {
+            "defaultConfiguration": "{\n\t\"productId\":\"com.product.renewing.1month.1\",\n\t\"priceUSDMicros\":990000,\n\t\"subscriptionPeriod\":\"P1M\",\n\t\"autoRenewing\": true\n}",
+            "defaultIfAirlockSystemIsDown": false,
+            "features": [],
+            "name": "One Month Auto Renew 0.99",
+            "namespace": "Consumers",
+            "noCachedResults": false,
+            "rolloutPercentage": 100,
+            "type": "FEATURE",
+            "uniqueId": "4c6d5d23-e611-4c52-9a7e-64aa102a473d"
+          },
+          {
+            "defaultConfiguration": "{\n\t\"productId\":\"com.product.renewing.1year.1\",\n\t\"priceUSDMicros\":9990000,\n\t\"subscriptionPeriod\":\"P1Y\",\n\t\"autoRenewing\":true\n}",
+            "defaultIfAirlockSystemIsDown": false,
+            "features": [],
+            "name": "One Year Auto Renew 9.99",
+            "namespace": "Consumers",
+            "noCachedResults": false,
+            "rolloutPercentage": 100,
+            "type": "FEATURE",
+            "uniqueId": "70dcb713-9992-478a-8b89-95a5adb53db1"
+          },
+          {
+            "defaultConfiguration": "{\n\t\"productId\":\"com.product.renewing.1year.pro\",\n\t\"priceUSDMicros\":9990000,\n\t\"subscriptionPeriod\":\"P1Y\",\n\t\"autoRenewing\": true\n}",
+            "defaultIfAirlockSystemIsDown": false,
+            "features": [],
+            "name": "One Year Auto Renew Pro 9.99",
+            "namespace": "Consumers",
+            "noCachedResults": false,
+            "rolloutPercentage": 100,
+            "type": "FEATURE",
+            "uniqueId": "dc5e5849-b090-4a3a-9916-2f81997e2804"
+          },
+          {
+            "defaultConfiguration": "{\n\t\"productId\":\"com.product.renewing.1month.pro\",\n\t\"priceUSDMicros\":990000,\n\t\"subscriptionPeriod\":\"P1M\",\n\t\"autoRenewing\": true\n}",
+            "defaultIfAirlockSystemIsDown": false,
+            "features": [],
+            "name": "One Month Auto Renew Pro 0.99",
+            "namespace": "Consumers",
+            "noCachedResults": false,
+            "rolloutPercentage": 100,
+            "type": "FEATURE",
+            "uniqueId": "213c9ef2-3ce3-4158-81a9-0a4a25ef75f8"
+          },
+          {
+            "defaultConfiguration": "{\n\t\"productId\":\"com.product.sub.renewing.1year.2\",\n\t\"priceUSDMicros\":9990000,\n\t\"subscriptionPeriod\":\"P1Y\",\n\t\"autoRenewing\": true\n}",
+            "defaultIfAirlockSystemIsDown": false,
+            "features": [],
+            "name": "One Year 2 Auto Renew 9.99",
+            "namespace": "Consumers",
+            "noCachedResults": false,
+            "rolloutPercentage": 100,
+            "type": "FEATURE",
+            "uniqueId": "8bec0632-f6b2-4f3b-95b2-2e0b4208b04a"
+          },
+          {
+            "defaultConfiguration": "{\n\t\"productId\":\"com.product.inapp.sub.1year.1\",\n\t\"priceUSDMicros\":3990000,\n\t\"subscriptionPeriod\":\"P1Y\",\n\t\"autoRenewing\":false\n}",
+            "defaultIfAirlockSystemIsDown": false,
+            "features": [],
+            "name": "One Year Sub 9.99",
+            "namespace": "Consumers",
+            "noCachedResults": false,
+            "rolloutPercentage": 100,
+            "type": "FEATURE",
+            "uniqueId": "a4e0f327-bf0c-4cc7-987b-d541d90d0398"
+          },
+          {
+            "defaultConfiguration": "{\n\t\"productId\":\"com.product.renewing.1monthtrial.1\",\n\t\"priceUSDMicros\":990000,\n\t\"subscriptionPeriod\":\"P1M\",\n\t\"autoRenewing\":true\n}",
+            "defaultIfAirlockSystemIsDown": false,
+            "features": [],
+            "name": "One Month Trial Renew 0.99",
+            "namespace": "Consumers",
+            "noCachedResults": false,
+            "rolloutPercentage": 100,
+            "type": "FEATURE",
+            "uniqueId": "6f888800-5adf-4374-bbf1-1d440925602f"
+          },
+          {
+            "defaultConfiguration": "{\n\t\"productId\":\"com.product.renewing.1month.1b\",\n\t\"priceUSDMicros\":990000,\n\t\"subscriptionPeriod\":\"P1M\",\n\t\"autoRenewing\":true\n}",
+            "defaultIfAirlockSystemIsDown": false,
+            "features": [],
+            "name": "One Month B Auto Renew 0.99",
+            "namespace": "Consumers",
+            "noCachedResults": false,
+            "rolloutPercentage": 100,
+            "type": "FEATURE",
+            "uniqueId": "d8fb7041-0b94-4885-8adb-75ecf8cc7195"
+          },
+          {
+            "defaultConfiguration": "{\n\t\"productId\":\"com.product.renewing.3months.1\",\n\t\"priceUSDMicros\":9990000,\n\t\"subscriptionPeriod\":\"P1Y\",\n\t\"autoRenewing\":true\n}",
+            "defaultIfAirlockSystemIsDown": false,
+            "features": [],
+            "name": "One Year Auto Renew Three Month Trial 9.99",
+            "namespace": "Consumers",
+            "noCachedResults": false,
+            "rolloutPercentage": 100,
+            "type": "FEATURE",
+            "uniqueId": "909f6e5e-c73b-4fa7-90c8-2c843b843c40"
+          },
+          {
+            "defaultConfiguration": "{\n\t\"productId\":\"com.product.renewing.1year.1c\",\n\t\"priceUSDMicros\":29990000,\n\t\"subscriptionPeriod\":\"P1Y\",\n\t\"autoRenewing\":true\n}",
+            "defaultIfAirlockSystemIsDown": false,
+            "features": [],
+            "name": "One Year C Auto Renew 29.99",
+            "namespace": "Consumers",
+            "noCachedResults": false,
+            "rolloutPercentage": 100,
+            "type": "FEATURE",
+            "uniqueId": "5fe35b7f-2d95-42df-b33d-4e7aa5347ef2"
+          },
+          {
+            "defaultConfiguration": "{\n\t\"productId\":\"com.product.renewing.1year.1d\",\n\t\"priceUSDMicros\":39990000,\n\t\"subscriptionPeriod\":\"P1Y\",\n\t\"autoRenewing\":true\n}",
+            "defaultIfAirlockSystemIsDown": false,
+            "features": [],
+            "name": "One Year D Auto Renew 39.99",
+            "namespace": "Consumers",
+            "noCachedResults": false,
+            "rolloutPercentage": 100,
+            "type": "FEATURE",
+            "uniqueId": "b913876f-a5a9-41aa-a029-1d9128ab182a"
+          },
+          {
+            "defaultConfiguration": "{\n\t\"productId\":\"com.product.renewing.1year.ip1\",\n\t\"priceUSDMicros\":9990000,\n\t\"subscriptionPeriod\":\"P1Y\",\n\t\"autoRenewing\":true,\n\t\"introPriceUSDMicros\":4990000\n}",
+            "defaultIfAirlockSystemIsDown": false,
+            "features": [],
+            "name": "One Year IP Auto Renew Pro 9.99",
+            "namespace": "Consumers",
+            "noCachedResults": false,
+            "rolloutPercentage": 100,
+            "type": "FEATURE",
+            "uniqueId": "4d82dd00-0e49-474e-b246-dfe8bd6ec34e"
+          },
+          {
+            "defaultConfiguration": "{\n\t\"productId\":\"com.product.renewing.1year.1b\",\n\t\"priceUSDMicros\":19990000,\n\t\"subscriptionPeriod\":\"P1Y\",\n\t\"autoRenewing\": true\n}",
+            "defaultIfAirlockSystemIsDown": false,
+            "features": [],
+            "name": "One Year B Auto Renew Pro 19.99",
+            "namespace": "Consumers",
+            "noCachedResults": false,
+            "rolloutPercentage": 100,
+            "type": "FEATURE",
+            "uniqueId": "c93a9eee-56ba-4974-949e-fb8c7bcb24ef"
+          }
+        ],
+        "name": "iOS Premium Products",
+        "namespace": "Consumers",
+        "noCachedResults": false,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "395d647a-8f0c-4d39-add3-7eddc1b962b0"
+      },
+      {
+        "defaultConfiguration": null,
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [],
+        "name": "Localytics Cohorts Consumer",
+        "namespace": "Consumers",
+        "noCachedResults": true,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "fc396ca4-00f3-4c16-866e-ac8fe5482226"
+      },
+      {
+        "defaultConfiguration": null,
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [],
+        "name": "LTV Input Consumer",
+        "namespace": "Consumers",
+        "noCachedResults": false,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "688827d6-e580-4046-98ab-964f15d123ea"
+      },
+      {
+        "defaultConfiguration": "{\n\t\"consumerGroupId\":\"LTV_PROCESS_CONSUMER\",\n\t\"ioActionRetries\": 3,\n\t\"processThreads\": 2,\n\t\"products\":[{\n\t\t\"id\":\"7900f30b-8f47-4829-95c5-9d4d6e8564ee\",\n\t\t\"platform\":\"ios\",\n\t\t\"conditions\":{\n\t\t\t\"property\":[\"Weather\"],\n\t\t\t\"platform\":[\"Mobile\"],\n\t\t\t\"platform_details\":[\"iPhone\",\n\t\t\t\"iPad\"]\n\t\t}\n\t},\n\t{\n\t\t\"id\":\"bc479db5-ff58-4138-b5e4-a8400a1f78d5\",\n\t\t\"platform\":\"android\",\n\t\t\"conditions\":{\n\t\t\t\"property\":[\"Weather\"],\n\t\t\t\"platform\":[\"Mobile\"],\n\t\t\t\"platform_details\":[\"Android Phone\",\n\t\t\t\"Android Tablet\"]\n\t\t}\n\t}]\n}",
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [],
+        "name": "LTV Process Consumer",
+        "namespace": "Consumers",
+        "noCachedResults": false,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "37f38d3a-d3bd-4d8e-afbb-f6787a96a4b0"
+      }
+    ],
+    "type": "ROOT",
+    "uniqueId": "d692b898-c76c-43e6-93dd-62661a5f0e1d"
+  },
+  "version": "V2.5",
+  "productName": "Airlytics Kafka Consumers"
+}

@@ -1,0 +1,97 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: mparticle-cohorts-consumer-prod
+  namespace: airlytics
+  labels:
+    app: mparticle-cohorts-consumer
+  annotations:
+    deployment.kubernetes.io/revision: '3'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mparticle-cohorts-consumer
+  template:
+    metadata:
+      labels:
+        app: mparticle-cohorts-consumer
+    spec:
+      nodeSelector:
+        pod-type: <POD_TYPE>
+      containers:
+        - name: mparticle-cohorts-consumer
+          image: <IMAGE_STORE_SERVER>/airlytics/consumer:latest
+          args: ["cohorts_mparticle"]
+          ports:
+            - containerPort: 8084
+              name: metrics
+              protocol: TCP
+          env:
+            - name: AIRLYTICS_ENVIRONMENT
+              value: 'PROD'
+            - name: AIRLYTICS_PRODUCT
+              value: 'AirCohorts'
+            - name: METRICS_PORT
+              value:  '8084'
+            - name: AIRLYTICS_DEPLOYMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: airlytics-deployments-config
+                  key: airlytics.deployment
+            - name: AIRLOCK_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: airlock-api-secret
+                  key: airlock-key
+            - name: AIRLOCK_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: airlock-api-secret
+                  key: airlock-password
+            - name: MPARTICLE_<PRODUCT_1>_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: third-party-api-secret
+                  key: mparticle-<PRODUCT_1>-key
+            - name: MPARTICLE_<PRODUCT_1>_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: third-party-api-secret
+                  key: mparticle-<PRODUCT_1>-secret
+            - name: MPARTICLE_<PRODUCT_2>_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: third-party-api-secret
+                  key: mparticle-<PRODUCT_2>-key
+            - name: MPARTICLE_<PRODUCT_2>_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: third-party-api-secret
+                  key: mparticle-<PRODUCT_2>-secret
+          livenessProbe:
+            httpGet:
+              path: /healthcheck
+              port: metrics
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              memory: 512Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600

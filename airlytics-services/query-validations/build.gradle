@@ -1,0 +1,58 @@
+plugins {
+    id 'org.springframework.boot' version '2.3.3.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'java'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+ext {
+    //change to false to publish a release build
+    SNAPSHOT = true
+    springBootAdminVersion = '2.1.0'
+}
+
+group = 'com.ibm.analytics'
+version = '1.0'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+    maven {
+        url = artifactory_url + artifactory_repo_key_airlock
+        credentials {
+            username artifactory_username
+            password artifactory_password
+        }
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    compile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'org.testng', name: 'testng', version: '6.14.3'
+    compile group: 'software.amazon.awssdk', name: 'protocol-core', version: '2.15.20'
+    compile group: 'software.amazon.awssdk', name: 'athena', version: '2.15.20'
+    compile group: 'commons-io', name: 'commons-io', version: '2.6'
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.2.2'
+
+    compile group:'com.amazonaws', name:'aws-java-sdk-bundle', version: '1.11.271'
+    compile 'mysql:mysql-connector-java:8.0.22'
+
+    // web server for com.ibm.analytics.queryservice.health and monitoring
+    implementation group: 'io.undertow', name: 'undertow-core', version: '2.0.28.Final'
+    implementation group: 'io.undertow', name: 'undertow-servlet', version: '2.0.28.Final'
+
+    implementation group: 'io.prometheus', name: 'simpleclient', version: '0.8.0'
+    implementation group: 'io.prometheus', name: 'simpleclient_hotspot', version: '0.8.0'
+    implementation group: 'io.prometheus', name: 'simpleclient_servlet', version: '0.8.0'
+
+    implementation  group: 'com.airlock', name: 'airlock-java-sources', version: '1.1.0'
+
+    compile 'org.json:json:20171018'
+}
+
+test {
+    useJUnitPlatform()
+}

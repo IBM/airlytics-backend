@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: dsr-cleanup-<PRODUCT>
+  namespace: airlytics
+  labels:
+    app: dsr-cleanup-<PRODUCT>
+spec:
+  ports:
+  - name: metrics
+    protocol: TCP
+    port: 8084
+    targetPort: 8081
+  selector:
+    app: dsr-cleanup-<PRODUCT>

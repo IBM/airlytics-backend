@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: consumers-efs-provisioner
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: consumers-efs-provisioner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: consumers-efs-provisioner
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: consumers-efs-provisioner
+    spec:
+      nodeSelector:
+        pod-type: <POD_TYPE>
+      serviceAccount: consumers-efs-provisioner
+      serviceAccountName: consumers-efs-provisioner
+      containers:
+        - name: consumers-efs-provisioner
+          image: quay.io/external_storage/efs-provisioner:latest
+          env:
+            - name: FILE_SYSTEM_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: consumers-efs-provisioner
+                  key: file.system.id
+            - name: AWS_REGION
+              valueFrom:
+                configMapKeyRef:
+                  name: consumers-efs-provisioner
+                  key: aws.region
+            - name: DNS_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: consumers-efs-provisioner
+                  key: dns.name
+                  optional: true
+            - name: PROVISIONER_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: consumers-efs-provisioner
+                  key: provisioner.name
+          volumeMounts:
+            - name: pv-volume
+              mountPath: /persistentvolumes
+      volumes:
+        - name: pv-volume
+          nfs:
+            server: <FILE_SYSTEM_ID>.<REGION.amazonaws.com
+            path: /persistentvolumes

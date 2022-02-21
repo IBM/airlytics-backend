@@ -1,0 +1,809 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  data:
+      consumer-jvm-overviewer.json: |-
+          {
+            "annotations": {
+              "list": [
+                {
+                  "builtIn": 1,
+                  "datasource": "-- Grafana --",
+                  "enable": true,
+                  "hide": true,
+                  "iconColor": "rgba(0, 211, 255, 1)",
+                  "name": "Annotations & Alerts",
+                  "type": "dashboard"
+                }
+              ]
+            },
+            "description": "Dashboard for Consumers JVM ",
+            "editable": true,
+            "gnetId": 3066,
+            "graphTooltip": 0,
+            "id": 9,
+            "iteration": 1586707398563,
+            "links": [],
+            "panels": [
+              {
+                "aliasColors": {
+                  "process_cpu_usage": "#badff4",
+                  "process_cpu_usage ": "#badff4",
+                  "system_cpu_usage": "#1f78c1",
+                  "system_cpu_usage ": "#1f78c1"
+                },
+                "bars": false,
+                "dashLength": 10,
+                "dashes": false,
+                "datasource": "airlytics",
+                "fill": 2,
+                "fillGradient": 0,
+                "gridPos": {
+                  "h": 7,
+                  "w": 8,
+                  "x": 0,
+                  "y": 0
+                },
+                "id": 8,
+                "legend": {
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "show": true,
+                  "total": false,
+                  "values": false
+                },
+                "lines": true,
+                "linewidth": 1,
+                "links": [],
+                "nullPointMode": "null",
+                "options": {
+                  "dataLinks": []
+                },
+                "percentage": false,
+                "pointradius": 5,
+                "points": false,
+                "renderer": "flot",
+                "seriesOverrides": [],
+                "spaceLength": 10,
+                "stack": false,
+                "steppedLine": false,
+                "targets": [
+                  {
+                    "expr": "irate(process_cpu_seconds_total{instance=~\"$instance\", service=~\"$service\", pod=~\".*$platform.*\", pod=~\".*$env.*\"}[1m])",
+                    "format": "time_series",
+                    "hide": false,
+                    "intervalFactor": 1,
+                    "legendFormat": "{{instance}}",
+                    "query": "from(bucket: \"telegraf\")\n|> range($range)\n|> filter(fn: (r) =>\n  r._measurement == \"process_cpu_usage\" AND\n  r.service == \"$service\" AND\n  r._field == \"gauge\")\n|> keep(columns: [\"_value\", \"_time\", \"_measurement\"])",
+                    "refId": "A",
+                    "resultFormat": "time_series"
+                  },
+                  {
+                    "expr": "rate(process_cpu_seconds_total{instance=~\"$instance\", service=~\"$service\", pod=~\".*$platform.*\", pod=~\".*$env.*\"}[1m])",
+                    "hide": true,
+                    "legendFormat": "{{instance}}",
+                    "refId": "B"
+                  },
+                  {
+                    "expr": "avg(sum(irate(node_cpu_seconds_total{instance=~\"ip-172-31-17-237.ec2.internal\", mode=~\"(system|user)\"}[30m])))",
+                    "hide": true,
+                    "refId": "C"
+                  }
+                ],
+                "thresholds": [],
+                "timeFrom": null,
+                "timeRegions": [],
+                "timeShift": null,
+                "title": "CPU Usage",
+                "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+                },
+                "type": "graph",
+                "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": []
+                },
+                "yaxes": [
+                  {
+                    "decimals": null,
+                    "format": "percentunit",
+                    "label": null,
+                    "logBase": 1,
+                    "max": "1.05",
+                    "min": "0",
+                    "show": true
+                  },
+                  {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                  }
+                ],
+                "yaxis": {
+                  "align": false,
+                  "alignLevel": null
+                }
+              },
+              {
+                "aliasColors": {},
+                "bars": false,
+                "dashLength": 10,
+                "dashes": false,
+                "datasource": "airlytics",
+                "fill": 1,
+                "fillGradient": 0,
+                "gridPos": {
+                  "h": 7,
+                  "w": 16,
+                  "x": 8,
+                  "y": 0
+                },
+                "id": 2,
+                "legend": {
+                  "alignAsTable": true,
+                  "avg": true,
+                  "current": true,
+                  "max": true,
+                  "min": true,
+                  "rightSide": true,
+                  "show": true,
+                  "total": false,
+                  "values": true
+                },
+                "lines": true,
+                "linewidth": 1,
+                "links": [],
+                "nullPointMode": "null",
+                "options": {
+                  "dataLinks": []
+                },
+                "percentage": false,
+                "pointradius": 5,
+                "points": false,
+                "renderer": "flot",
+                "repeat": null,
+                "seriesOverrides": [],
+                "spaceLength": 10,
+                "stack": false,
+                "steppedLine": false,
+                "targets": [
+                  {
+                    "expr": "sum(jvm_memory_bytes_used{instance=~\"$instance\", service=~\"$service\", pod=~\".*$platform.*\", pod=~\".*$env.*\"}) by (instance)",
+                    "format": "time_series",
+                    "interval": "",
+                    "intervalFactor": 5,
+                    "legendFormat": "used {{instance}}",
+                    "metric": "jvm_memory_bytes_used",
+                    "refId": "A",
+                    "step": 5
+                  },
+                  {
+                    "expr": "sum(jvm_memory_bytes_max{instance=~\"$instance\", service=~\"$service\", pod=~\".*$platform.*\", pod=~\".*$env.*\"}) by (instance)",
+                    "legendFormat": " maximum {{instance}}",
+                    "refId": "B"
+                  }
+                ],
+                "thresholds": [],
+                "timeFrom": null,
+                "timeRegions": [],
+                "timeShift": null,
+                "title": "Memory Used/Maximum",
+                "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+                },
+                "type": "graph",
+                "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": []
+                },
+                "yaxes": [
+                  {
+                    "format": "bytes",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                  },
+                  {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                  }
+                ],
+                "yaxis": {
+                  "align": false,
+                  "alignLevel": null
+                }
+              },
+              {
+                "aliasColors": {},
+                "bars": false,
+                "dashLength": 10,
+                "dashes": false,
+                "datasource": "airlytics",
+                "fill": 1,
+                "fillGradient": 0,
+                "gridPos": {
+                  "h": 7,
+                  "w": 12,
+                  "x": 0,
+                  "y": 7
+                },
+                "id": 3,
+                "legend": {
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "show": true,
+                  "total": false,
+                  "values": false
+                },
+                "lines": true,
+                "linewidth": 1,
+                "links": [],
+                "nullPointMode": "null",
+                "options": {
+                  "dataLinks": []
+                },
+                "percentage": false,
+                "pointradius": 5,
+                "points": false,
+                "renderer": "flot",
+                "seriesOverrides": [],
+                "spaceLength": 10,
+                "stack": false,
+                "steppedLine": false,
+                "targets": [
+                  {
+                    "expr": "jvm_threads_current{instance=~\"$instance\", service=~\"$service\", pod=~\".*$platform.*\", pod=~\".*$env.*\"}",
+                    "format": "time_series",
+                    "intervalFactor": 5,
+                    "legendFormat": "current [{{instance}}]",
+                    "metric": "jvm_threads_current",
+                    "refId": "A",
+                    "step": 10
+                  },
+                  {
+                    "expr": "jvm_threads_daemon{instance=~\"$instance\", service=~\"$service\", pod=~\".*$platform.*\", pod=~\".*$env.*\"}",
+                    "format": "time_series",
+                    "intervalFactor": 5,
+                    "legendFormat": "daemon [{{instance}}]",
+                    "metric": "jvm_threads_daemon",
+                    "refId": "B",
+                    "step": 10
+                  }
+                ],
+                "thresholds": [],
+                "timeFrom": null,
+                "timeRegions": [],
+                "timeShift": null,
+                "title": "Threads Used",
+                "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+                },
+                "type": "graph",
+                "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": []
+                },
+                "yaxes": [
+                  {
+                    "decimals": 0,
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                  },
+                  {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                  }
+                ],
+                "yaxis": {
+                  "align": false,
+                  "alignLevel": null
+                }
+              },
+              {
+                "aliasColors": {},
+                "bars": false,
+                "dashLength": 10,
+                "dashes": false,
+                "datasource": "airlytics",
+                "fill": 1,
+                "fillGradient": 0,
+                "gridPos": {
+                  "h": 7,
+                  "w": 12,
+                  "x": 12,
+                  "y": 7
+                },
+                "id": 4,
+                "legend": {
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "show": true,
+                  "total": false,
+                  "values": false
+                },
+                "lines": true,
+                "linewidth": 1,
+                "links": [],
+                "nullPointMode": "null",
+                "options": {
+                  "dataLinks": []
+                },
+                "percentage": false,
+                "pointradius": 5,
+                "points": false,
+                "renderer": "flot",
+                "seriesOverrides": [],
+                "spaceLength": 10,
+                "stack": false,
+                "steppedLine": false,
+                "targets": [
+                  {
+                    "expr": "jvm_classes_loaded{instance=~\"$instance\", service=~\"$service\", pod=~\".*$platform.*\", pod=~\".*$env.*\"}",
+                    "format": "time_series",
+                    "interval": "",
+                    "intervalFactor": 5,
+                    "legendFormat": "loaded [{{instance}}]",
+                    "metric": "jvm_classes_loaded",
+                    "refId": "A",
+                    "step": 10
+                  }
+                ],
+                "thresholds": [],
+                "timeFrom": null,
+                "timeRegions": [],
+                "timeShift": null,
+                "title": "Class Loading",
+                "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+                },
+                "type": "graph",
+                "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": []
+                },
+                "yaxes": [
+                  {
+                    "decimals": 0,
+                    "format": "short",
+                    "label": "",
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                  },
+                  {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                  }
+                ],
+                "yaxis": {
+                  "align": false,
+                  "alignLevel": null
+                }
+              },
+              {
+                "aliasColors": {},
+                "bars": false,
+                "dashLength": 10,
+                "dashes": false,
+                "datasource": "airlytics",
+                "fill": 1,
+                "fillGradient": 0,
+                "gridPos": {
+                  "h": 7,
+                  "w": 12,
+                  "x": 0,
+                  "y": 14
+                },
+                "id": 5,
+                "legend": {
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "show": true,
+                  "total": false,
+                  "values": false
+                },
+                "lines": true,
+                "linewidth": 1,
+                "links": [],
+                "nullPointMode": "null",
+                "options": {
+                  "dataLinks": []
+                },
+                "percentage": false,
+                "pointradius": 5,
+                "points": false,
+                "renderer": "flot",
+                "seriesOverrides": [],
+                "spaceLength": 10,
+                "stack": false,
+                "steppedLine": false,
+                "targets": [
+                  {
+                    "expr": "rate(jvm_gc_collection_seconds_sum{instance=~\"$instance\", service=~\"$service\", pod=~\".*$platform.*\", pod=~\".*$env.*\"}[1m])",
+                    "format": "time_series",
+                    "interval": "",
+                    "intervalFactor": 5,
+                    "legendFormat": "{{gc}} [{{instance}}]",
+                    "metric": "jvm_gc_collection_seconds_sum",
+                    "refId": "A",
+                    "step": 10
+                  }
+                ],
+                "thresholds": [],
+                "timeFrom": null,
+                "timeRegions": [],
+                "timeShift": null,
+                "title": "GC time / 1 min. rate",
+                "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+                },
+                "type": "graph",
+                "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": []
+                },
+                "yaxes": [
+                  {
+                    "format": "s",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                  },
+                  {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                  }
+                ],
+                "yaxis": {
+                  "align": false,
+                  "alignLevel": null
+                }
+              },
+              {
+                "aliasColors": {},
+                "bars": false,
+                "dashLength": 10,
+                "dashes": false,
+                "datasource": "airlytics",
+                "fill": 1,
+                "fillGradient": 0,
+                "gridPos": {
+                  "h": 7,
+                  "w": 12,
+                  "x": 12,
+                  "y": 14
+                },
+                "id": 6,
+                "legend": {
+                  "avg": false,
+                  "current": false,
+                  "max": false,
+                  "min": false,
+                  "show": true,
+                  "total": false,
+                  "values": false
+                },
+                "lines": true,
+                "linewidth": 1,
+                "links": [],
+                "nullPointMode": "null",
+                "options": {
+                  "dataLinks": []
+                },
+                "percentage": false,
+                "pointradius": 5,
+                "points": false,
+                "renderer": "flot",
+                "seriesOverrides": [],
+                "spaceLength": 10,
+                "stack": false,
+                "steppedLine": false,
+                "targets": [
+                  {
+                    "expr": "jvm_gc_collection_seconds_count{instance=~\"$instance\", service=~\"$service\", pod=~\".*$platform.*\", pod=~\".*$env.*\"}",
+                    "format": "time_series",
+                    "interval": "",
+                    "intervalFactor": 5,
+                    "legendFormat": "{{gc}} [{{instance}}]",
+                    "metric": "",
+                    "refId": "A",
+                    "step": 10
+                  }
+                ],
+                "thresholds": [],
+                "timeFrom": null,
+                "timeRegions": [],
+                "timeShift": null,
+                "title": "GC count",
+                "tooltip": {
+                  "shared": true,
+                  "sort": 0,
+                  "value_type": "individual"
+                },
+                "type": "graph",
+                "xaxis": {
+                  "buckets": null,
+                  "mode": "time",
+                  "name": null,
+                  "show": true,
+                  "values": []
+                },
+                "yaxes": [
+                  {
+                    "decimals": 0,
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                  },
+                  {
+                    "format": "short",
+                    "label": null,
+                    "logBase": 1,
+                    "max": null,
+                    "min": null,
+                    "show": true
+                  }
+                ],
+                "yaxis": {
+                  "align": false,
+                  "alignLevel": null
+                }
+              }
+            ],
+            "refresh": false,
+            "schemaVersion": 20,
+            "style": "dark",
+            "tags": [
+              "JVM",
+              "prometheus"
+            ],
+            "templating": {
+              "list": [
+                {
+                  "allValue": "",
+                  "current": {
+                    "tags": [],
+                    "text": "All",
+                    "value": [
+                      "$__all"
+                    ]
+                  },
+                  "datasource": "airlytics",
+                  "definition": "",
+                  "hide": 0,
+                  "includeAll": true,
+                  "label": "Instance",
+                  "multi": true,
+                  "name": "instance",
+                  "options": [],
+                  "query": "label_values(instance)",
+                  "refresh": 1,
+                  "regex": "",
+                  "skipUrlSync": false,
+                  "sort": 0,
+                  "tagValuesQuery": "",
+                  "tags": [],
+                  "tagsQuery": "",
+                  "type": "query",
+                  "useTags": false
+                },
+                {
+                  "allValue": null,
+                  "current": {
+                    "tags": [],
+                    "text": "persistence-consumer",
+                    "value": [
+                      "persistence-consumer"
+                    ]
+                  },
+                  "datasource": "airlytics",
+                  "definition": "label_values(service)",
+                  "hide": 0,
+                  "includeAll": true,
+                  "label": "Consumer",
+                  "multi": true,
+                  "name": "service",
+                  "options": [
+                    {
+                      "selected": false,
+                      "text": "All",
+                      "value": "$__all"
+                    },
+                    {
+                      "selected": false,
+                      "text": "compaction-consumer",
+                      "value": "compaction-consumer"
+                    },
+                    {
+                      "selected": false,
+                      "text": "dsr-consumer",
+                      "value": "dsr-consumer"
+                    },
+                    {
+                      "selected": true,
+                      "text": "persistence-consumer",
+                      "value": "persistence-consumer"
+                    },
+                    {
+                      "selected": false,
+                      "text": "raw-data-consumer",
+                      "value": "raw-data-consumer"
+                    },
+                    {
+                      "selected": false,
+                      "text": "userdb-consumer",
+                      "value": "userdb-consumer"
+                    }
+                  ],
+                  "query": "label_values(service)",
+                  "refresh": 0,
+                  "regex": "/.*consumer.*/",
+                  "skipUrlSync": false,
+                  "sort": 0,
+                  "tagValuesQuery": "",
+                  "tags": [],
+                  "tagsQuery": "",
+                  "type": "query",
+                  "useTags": true
+                },
+                {
+                  "allValue": null,
+                  "current": {
+                    "tags": [],
+                    "text": "ios",
+                    "value": "ios"
+                  },
+                  "hide": 0,
+                  "includeAll": false,
+                  "label": "Platform",
+                  "multi": false,
+                  "name": "platform",
+                  "options": [
+                    {
+                      "selected": false,
+                      "text": "android",
+                      "value": "android"
+                    },
+                    {
+                      "selected": true,
+                      "text": "ios",
+                      "value": "ios"
+                    }
+                  ],
+                  "query": "android, ios",
+                  "skipUrlSync": false,
+                  "type": "custom"
+                },
+                {
+                  "allValue": null,
+                  "current": {
+                    "tags": [],
+                    "text": "prod",
+                    "value": "prod"
+                  },
+                  "hide": 0,
+                  "includeAll": false,
+                  "label": "Environment",
+                  "multi": false,
+                  "name": "env",
+                  "options": [
+                    {
+                      "selected": true,
+                      "text": "prod",
+                      "value": "prod"
+                    },
+                    {
+                      "selected": false,
+                      "text": "dev",
+                      "value": "dev"
+                    }
+                  ],
+                  "query": "prod, dev",
+                  "skipUrlSync": false,
+                  "type": "custom"
+                }
+              ]
+            },
+            "time": {
+              "from": "now-30m",
+              "to": "now"
+            },
+            "timepicker": {
+              "refresh_intervals": [
+                "5s",
+                "10s",
+                "30s",
+                "1m",
+                "5m",
+                "15m",
+                "30m",
+                "1h",
+                "2h",
+                "1d"
+              ],
+              "time_options": [
+                "5m",
+                "15m",
+                "1h",
+                "6h",
+                "12h",
+                "24h",
+                "2d",
+                "7d",
+                "30d"
+              ]
+            },
+            "timezone": "",
+            "title": "Consumers  JVM  Overview",
+            "uid": "kCjZHLjZz",
+            "version": 6
+          }
+  kind: ConfigMap
+  metadata:
+    name: grafana-dashboard-event-proxy
+    namespace: monitoring
+kind: ConfigMapList

@@ -1,0 +1,92 @@
+﻿{
+  "devS3Path": "https://*********/*********/******/",
+  "entitlementsRoot": {
+    "entitlements": [],
+    "features": [],
+    "type": "ROOT",
+    "uniqueId": "be924d8e-41d4-4481-afa7-51937a05cf4c"
+  },
+  "defaultLanguage": "en",
+  "productId": "718af5b3-ea3d-4e11-bbf1-ae5f700959be",
+  "s3Path": "https://******/******/*****/",
+  "supportedLanguages": [
+    "en"
+  ],
+  "seasonId": "9b0f77e1-36c5-43bc-95d5-40a8ffa22adc",
+  "root": {
+    "entitlements": [],
+    "features": [
+      {
+        "defaultConfiguration": "{\n  \"query\":\"SELECT id FROM users.users WHERE platform = '%s' AND push_token is not null AND status = 'ACTIVE' AND ((first_session < now() - interval '24 hours' AND (last_push_sent < now() - interval '1 hours' OR last_push_sent is null) AND (last_session < now() - interval '1 hours' OR last_session is null)) OR (first_session < now() - interval '7 days' AND (last_push_sent < now() - interval '8 hours' OR last_push_sent is null) AND (last_session < now() - interval '8 hours' OR last_session is null)) OR ((last_push_sent < now() - interval '24 hours' OR last_push_sent is null) AND (last_session < now() - interval '24 hours' OR last_session is null)))\",\n  \"update\":\"UPDATE users.users SET last_push_sent = ? WHERE id IN (%s)\"\n}",
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [],
+        "name": "Inactive Users Query",
+        "namespace": "query",
+        "noCachedResults": false,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "0626444f-518b-4129-927f-3ff7b71346c6"
+      },
+      {
+        "defaultConfiguration": "{\n\t\"condition\":\"last_session < now() - interval '3600 days'\",\n\t\"query\":\"SELECT * FROM users.users WHERE %s\",\n\t\"insert\":\"INSERT INTO users.users_archive (%s) ON CONFLICT (id) DO UPDATE SET\",\n\t\"delete\":\"DELETE FROM users.users as U USING users.users_archive as D WHERE U.id = D.id\",\n\t\"retained_fields\":\"first_session\",\n\t\"schedulingRule\":\"0 30 8 ? * *\"\n}",
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [],
+        "name": "DB Pruner",
+        "namespace": "query",
+        "noCachedResults": false,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "9a6f4a96-dc5f-490c-8653-99b656c72480"
+      },
+      {
+        "defaultConfiguration": "{\n\t\"delete\":\"DELETE FROM users.users WHERE dev_user = true\",\n\t\n}",
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [],
+        "name": "Remove dev users",
+        "namespace": "query",
+        "noCachedResults": false,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "eb1c2b98-3269-4ef6-bce8-80daa78047b3"
+      },
+      {
+        "defaultConfiguration": "{\n\t\"query\":\"SELECT * FROM users.users ORDER BY shard\",\n\t\"shardedQuery\":\"SELECT * FROM users.users WHERE shard = %d ORDER BY id\",\n\t\"schedulingRule\":\"0 30 9 ? * *\"\n}",
+        "defaultIfAirlockSystemIsDown": false,
+        "features": [
+          {
+            "defaultConfiguration": "{\n\t\"maxPollRecords\":600,\n\t\"maxPollIntervalMs\":300000,\n\t\"consumerGroupId\":\"AIRLYTICS_CONSUMER\"\n}",
+            "defaultIfAirlockSystemIsDown": true,
+            "features": [],
+            "name": "Analytics Consumer",
+            "namespace": "Consumers",
+            "noCachedResults": false,
+            "rolloutPercentage": 100,
+            "type": "FEATURE",
+            "uniqueId": "45757aa7-29f8-4a50-9ab0-426863e25881"
+          },
+          {
+            "defaultConfiguration": "{\n\n}",
+            "defaultIfAirlockSystemIsDown": false,
+            "features": [],
+            "name": "Persistence Consumer",
+            "namespace": "Consumers",
+            "noCachedResults": false,
+            "rolloutPercentage": 100,
+            "type": "FEATURE",
+            "uniqueId": "13d01457-a042-4412-b3d3-c4d4d62a2c89"
+          }
+        ],
+        "name": "DB Dumper",
+        "namespace": "query",
+        "noCachedResults": false,
+        "rolloutPercentage": 100,
+        "type": "FEATURE",
+        "uniqueId": "28776c89-bbdf-48b0-ba60-e48064e3bc88"
+      }
+    ],
+    "type": "ROOT",
+    "uniqueId": "687cdd8e-0258-461d-89a1-3ff16cb27428"
+  },
+  "version": "V2.5",
+  "productName": "Retention Tracker"
+}

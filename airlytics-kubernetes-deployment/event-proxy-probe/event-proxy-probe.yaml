@@ -1,0 +1,76 @@
+﻿﻿kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: event-proxy-probe
+  namespace: airlytics
+  labels:
+    app: event-proxy-probe
+  annotations:
+    deployment.kubernetes.io/revision: '3'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: event-proxy-probe
+  template:
+    metadata:
+      labels:
+        app: event-proxy-probe
+    spec:
+      nodeSelector:
+        pod-type: <POD_TYPE>
+      containers:
+      - name: event-proxy-probe
+        image: <IMAGE_STORE_SERVER>/airlytics/event-proxy-probe:java-8.10-all-events
+        ports:
+        - containerPort: 8084
+          name: metrics
+          protocol: TCP
+        env:
+        - name: IS_PROBE
+          value: 'true'
+        - name: KEEP_ALIVE
+          value: 'true'
+        - name: PROTOCOL
+          value: 'https'
+        - name: RPS
+          value: '1000'
+        - name: LOCAL_HOST
+          value: '0.0.0.0'
+        - name: SWAGGER
+          value: 'true'
+        - name: PORT
+          value: '443'
+        - name: METRICS_PORT
+          value:  '8084'
+        - name: BUILD_NUMBER
+          value: '0'
+        - name: VERSION
+          value: '1.0'
+        livenessProbe:
+          httpGet:
+            path: /metrics
+            port: metrics
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        resources:
+          limits:
+            memory: 200Mi
+          requests:
+            memory: 200Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        imagePullPolicy: Always
+      automountServiceAccountToken: false
+      terminationGracePeriodSeconds: 30
+      restartPolicy: Always
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600

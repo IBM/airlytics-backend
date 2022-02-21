@@ -1,0 +1,21 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: kafdrop-service
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: <CET_ID>
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    # Only run SSL on the port named "https" below.
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "https"
+  namespace: airlytics
+  labels:
+    app: kafdrop-service
+spec:
+  ports:
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 9000
+  selector:
+    app: kafdrop
+  type: LoadBalancer

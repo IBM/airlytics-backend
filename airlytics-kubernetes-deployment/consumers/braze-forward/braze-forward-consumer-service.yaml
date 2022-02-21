@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: braze-forward-consumer
+  namespace: airlytics
+  labels:
+    app: braze-forward-consumer
+spec:
+  ports:
+  - name: metrics
+    protocol: TCP
+    port: 8084
+    targetPort: 8084
+  selector:
+    app: braze-forward-consumer

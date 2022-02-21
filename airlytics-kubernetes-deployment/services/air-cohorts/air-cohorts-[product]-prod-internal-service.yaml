@@ -1,0 +1,26 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: air-cohorts-<PRODUCT>-prod-internal
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: <CERT_ID>
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    # Only run SSL on the port named "https" below.
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "https"
+  namespace: airlytics
+  labels:
+    app: air-cohorts-<PRODUCT>-prod
+spec:
+  ports:
+  - name: https
+    protocol: TCP
+    port: 443
+    targetPort: 8081
+  - name: metrics
+    protocol: TCP
+    port: 8084
+    targetPort: 8081
+  selector:
+    app: air-cohorts-<PRODUCT>-prod
+  type: LoadBalancer

@@ -1,0 +1,59 @@
+buildscript {
+	ext {
+		springBootVersion = '2.1.0.RELEASE'
+	}
+}
+
+
+plugins {
+	id 'java-library'
+}
+
+
+repositories {
+	mavenCentral()
+	maven {
+		url = artifactory_url + artifactory_repo_key_airlock
+		credentials {
+			username artifactory_username
+			password artifactory_password
+		}
+	}
+}
+
+dependencies {
+
+	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+
+
+	compile 'com.turo:pushy:0.13.10'
+	compile group: 'com.github.mlaccetti', name: 'javapns', version: '2.3.2'
+	compile 'com.rabbitmq:amqp-client:5.7.3'
+
+	implementation 'com.google.firebase:firebase-admin:6.11.0'
+	implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.376')
+	implementation 'com.amazonaws:aws-java-sdk-secretsmanager:1.11.376'
+	compile('com.amazonaws:aws-java-sdk-core:1.11.376')
+	compile('com.amazonaws:aws-java-sdk-s3:1.11.376')
+
+	implementation  group: 'com.airlock', name: 'airlock-java-sources', version: '1.1.0'
+	// Needed for Airlock
+	implementation 'com.squareup.okhttp3:okhttp:3.4.1'
+	implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.4.1'
+
+	// https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-common
+	implementation('org.apache.hadoop:hadoop-common:3.1.0') {
+		exclude group: 'org.apache.parquet.hadoop.*'
+		exclude group: 'org.apache.parquet.schema.*'
+		exclude group: 'org.apache.parquet.format.*'
+	}
+
+	// web server for health and monitoring
+	implementation group: 'io.undertow', name: 'undertow-core', version: '2.0.28.Final'
+	implementation group: 'io.undertow', name: 'undertow-servlet', version: '2.0.28.Final'
+
+	implementation group: 'io.prometheus', name: 'simpleclient', version: '0.8.0'
+	implementation group: 'io.prometheus', name: 'simpleclient_hotspot', version: '0.8.0'
+	implementation group: 'io.prometheus', name: 'simpleclient_servlet', version: '0.8.0'
+}

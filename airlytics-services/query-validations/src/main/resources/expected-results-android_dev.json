@@ -1,0 +1,35 @@
+{
+        "mode": "prod",
+        "successRates": {
+                "app-crash": 5000,
+                "app-launch": 5000000,
+                "asset-viewed": 3100000,
+                "card-viewed": 15000000,
+                "in-app-message-displayed": 50,
+                "messaging-campaign-interacted": 1,
+                "notification-interacted": 420000,
+                "page-viewed": 5500000,
+                "purchase-attempted": 300,
+                "purchase-screen-viewed": 32000,
+                "session-start": 19000000,
+                "session-end": 19000000,
+                "user-attributes": 2800000,
+                "card-clicked": 0,
+                "purchase-restored": 0
+        },
+        "errorRates": {
+                "app-crash": 0,
+                "app-launch": 0,
+                "asset-viewed": 0,
+                "card-viewed": 0,
+                "in-app-message-displayed": 0,
+                "messaging-campaign-interacted": 0,
+                "notification-interacted": 0,
+                "page-viewed": 0,
+                "purchase-attempted": 0,
+                "purchase-screen-viewed": 0,
+                "session-start": 0,
+                "session-end": 0,
+                "user-attributes": 0
+        }
+}

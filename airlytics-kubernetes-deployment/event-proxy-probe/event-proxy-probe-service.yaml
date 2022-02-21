@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: event-proxy-probe
+  namespace: airlytics
+  labels:
+    app: event-proxy-probe
+spec:
+  ports:
+  - name: metrics
+    protocol: TCP
+    port: 8084
+    targetPort: 8084
+  selector:
+    app: event-proxy-probe
+  type: NodePort

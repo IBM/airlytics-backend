@@ -1,0 +1,78 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: ltv-aggregator-<PRODUCT>-prod
+  namespace: airlytics
+  labels:
+    app: ltv-aggregator-<PRODUCT>
+  annotations:
+    deployment.kubernetes.io/revision: '3'
+spec:
+  schedule: "0 3 * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        metadata:
+          labels:
+            app: ltv-aggregator-<PRODUCT>
+        spec:
+          nodeSelector:
+            pod-type: <POD_TYPE>
+          containers:
+            - name: event-aggregator
+              image: <IMAGE_STORE_SERVER>/airlytics/event-aggregator-job:latest
+              ports:
+                - containerPort: 8081
+                  name: web
+                  protocol: TCP
+              env:
+                - name: AIRLYTICS_AGGREGATION
+                  value: 'LTV'
+                - name: AIRLYTICS_ENVIRONMENT
+                  value: 'PROD'
+                - name: AIRLYTICS_PRODUCT
+                  value: '<PRODUCT>'
+                - name: AIRLYTICS_DEPLOYMENT
+                  valueFrom:
+                    configMapKeyRef:
+                      name: airlytics-deployments-config
+                      key: airlytics.deployment
+                - name: AIRLOCK_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: airlock-api-secret
+                      key: airlock-key
+                - name: AIRLOCK_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: airlock-api-secret
+                      key: airlock-password
+              livenessProbe:
+                httpGet:
+                  path: /healthcheck/is-alive
+                  port: web
+                initialDelaySeconds: 30
+                periodSeconds: 30
+              readinessProbe:
+                httpGet:
+                  path: /healthcheck/is-ready
+                  port: web
+                initialDelaySeconds: 30
+                periodSeconds: 30
+              resources:
+                limits:
+                  memory: 256Mi
+                requests:
+                  memory: 256Mi
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+              imagePullPolicy: Always
+          restartPolicy: Never
+          terminationGracePeriodSeconds: 30
+          dnsPolicy: ClusterFirst
+          securityContext: {}
+          schedulerName: default-scheduler
